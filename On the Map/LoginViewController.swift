@@ -14,26 +14,54 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var emailLoginTextField: UITextField!
     @IBOutlet weak var passwordLoginTextField: UITextField!
-    let emailPlaceholderText = "Email"
-    let passwordPlaceholderText = "Password"
+    let whitespaceSet = NSCharacterSet.whitespaceCharacterSet()
+    let alertController = UIAlertController(title: "", message: "", preferredStyle: .Alert)
 
+    // MARK: - UI Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         emailLoginTextField.delegate = self
         passwordLoginTextField.delegate = self
         
-        emailLoginTextField.text = emailPlaceholderText
-        passwordLoginTextField.text = passwordPlaceholderText
+
         
+        // Add tap recognizers
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
+        
+        // Add alert controller action
+        let okAction = UIAlertAction(title: "Dismiss", style: .Default) { action in
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        alertController.addAction(okAction)
     }
 
     // MARK: - IBActions
 
     @IBAction func loginButtonPressed(sender: AnyObject) {
-        print("logged in")
+        
+        // Make sure login text fields aren't empty or doesn't include only whitespaces
+        if emailLoginTextField.text!.stringByTrimmingCharactersInSet(whitespaceSet) != "" && passwordLoginTextField.text!.stringByTrimmingCharactersInSet(whitespaceSet) != "" {
+            
+            UdacityClient.sharedInstance().authenticateLogin(UdacityClient.Methods.AuthenticationSession, userName: emailLoginTextField.text!, password: passwordLoginTextField.text!) { (result, success, errorString) in
+                if success {
+                    print("Login successful")
+                } else {
+                    print("Login failed")
+                }
+            }
+        } else {
+            if emailLoginTextField.text!.stringByTrimmingCharactersInSet(whitespaceSet) == "" && passwordLoginTextField.text!.stringByTrimmingCharactersInSet(whitespaceSet) == "" {
+                alertController.message = "Email/Password is empty."
+            } else if emailLoginTextField.text!.stringByTrimmingCharactersInSet(whitespaceSet) == "" {
+                alertController.message = "Email is empty."
+            } else {
+                alertController.message = "Password is empty."
+            }
+
+            presentViewController(alertController, animated: true, completion: nil)
+        }
     }
     
     @IBAction func signUpButtonPressed(sender: AnyObject) {
@@ -56,30 +84,6 @@ class LoginViewController: UIViewController {
 
 // MARK: - UITextField Delegate Methods
 extension LoginViewController: UITextFieldDelegate {
-    
-    func textFieldDidBeginEditing(textField: UITextField) {
-        
-        // If placeholder text is displayed, empty textfield when beginning editing
-        if textField == emailLoginTextField && textField.text == emailPlaceholderText {
-            textField.text = ""
-        }
-        else if textField == passwordLoginTextField && textField.text == passwordPlaceholderText {
-            textField.text = ""
-        }
-    }
-    
-    func textFieldDidEndEditing(textField: UITextField) {
-        
-        // If textField is empty, show respective default placeholder text
-        if textField.text == "" {
-            if textField == emailLoginTextField {
-                textField.text = emailPlaceholderText
-            }
-            else {
-                textField.text = passwordPlaceholderText
-            }
-        }
-    }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()

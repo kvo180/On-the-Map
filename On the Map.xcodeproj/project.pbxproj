@@ -17,6 +17,8 @@
 		9F9C62C61BF3046F0039DE46 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F9C62C31BF3046F0039DE46 /* Roboto-Medium.ttf */; };
 		9F9C62C71BF3046F0039DE46 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F9C62C41BF3046F0039DE46 /* Roboto-Regular.ttf */; };
 		9F9C62C81BF3046F0039DE46 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F9C62C51BF3046F0039DE46 /* Roboto-Thin.ttf */; };
+		9FD30D301BF564030034CB14 /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD30D2F1BF564030034CB14 /* UdacityClient.swift */; };
+		9FD30D321BF5658A0034CB14 /* UdacityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD30D311BF5658A0034CB14 /* UdacityConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		9F9C62C31BF3046F0039DE46 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		9F9C62C41BF3046F0039DE46 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		9F9C62C51BF3046F0039DE46 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
+		9FD30D2F1BF564030034CB14 /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
+		9FD30D311BF5658A0034CB14 /* UdacityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +148,7 @@
 		9F9C62B81BF2F5FA0039DE46 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9FD30D2C1BF4A96B0034CB14 /* Clients */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -164,6 +169,31 @@
 				9F9C62C51BF3046F0039DE46 /* Roboto-Thin.ttf */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		9FD30D2C1BF4A96B0034CB14 /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				9FD30D2E1BF4A9760034CB14 /* Facebook */,
+				9FD30D2D1BF4A9700034CB14 /* Udacity */,
+			);
+			name = Clients;
+			sourceTree = "<group>";
+		};
+		9FD30D2D1BF4A9700034CB14 /* Udacity */ = {
+			isa = PBXGroup;
+			children = (
+				9FD30D2F1BF564030034CB14 /* UdacityClient.swift */,
+				9FD30D311BF5658A0034CB14 /* UdacityConstants.swift */,
+			);
+			name = Udacity;
+			sourceTree = "<group>";
+		};
+		9FD30D2E1BF4A9760034CB14 /* Facebook */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Facebook;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -301,7 +331,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F9C628C1BEF6E1C0039DE46 /* LoginViewController.swift in Sources */,
+				9FD30D321BF5658A0034CB14 /* UdacityConstants.swift in Sources */,
 				9F9C628A1BEF6E1C0039DE46 /* AppDelegate.swift in Sources */,
+				9FD30D301BF564030034CB14 /* UdacityClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,6 +558,7 @@
 				9F9C62B01BEF6E1C0039DE46 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9F9C62B11BEF6E1C0039DE46 /* Build configuration list for PBXNativeTarget "On the MapTests" */ = {
 			isa = XCConfigurationList;
@@ -534,6 +567,7 @@
 				9F9C62B31BEF6E1C0039DE46 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9F9C62B41BEF6E1C0039DE46 /* Build configuration list for PBXNativeTarget "On the MapUITests" */ = {
 			isa = XCConfigurationList;
@@ -542,6 +576,7 @@
 				9F9C62B61BEF6E1C0039DE46 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
