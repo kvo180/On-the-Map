@@ -18,8 +18,33 @@ class UdacityClient: NSObject {
         session = NSURLSession.sharedSession()
     }
     
+    // MARK: - Authenticate Login
+    func authenticateLogin(username: String, password: String, completionHandler: (success: Bool, errorString: String?) -> Void) {
+        
+        taskForPOSTMethod(UdacityClient.Methods.AuthenticationSession, userName: username, password: password) { (result, error) in
+            
+            if let error = error {
+                print(error)
+                completionHandler(success: false, errorString: "Login failed - Account")
+            } else {
+                if let account = result.valueForKey(UdacityClient.JSONResponseKeys.Account) as? NSDictionary {
+                    if let userKey = account.valueForKey(UdacityClient.JSONResponseKeys.UserKey) as? String {
+                        print("Got userKey: \(userKey)")
+                        completionHandler(success: true, errorString: nil)
+                    } else {
+                        print("Could not find \(UdacityClient.JSONResponseKeys.UserKey) in \(account)")
+                        completionHandler(success: false, errorString: "Login failed - User Key")
+                    }
+                } else {
+                    print("Could not find \(UdacityClient.JSONResponseKeys.Account) in \(result)")
+                    completionHandler(success: false, errorString: "Login failed - Account")
+                }
+            }
+        }
+    }
+    
     // MARK: - POST
-    func authenticateLogin(method: String, userName: String, password: String, completionHandler: (result: AnyObject!, success: Bool, error: NSError?) -> Void) {
+    func taskForPOSTMethod(method: String, userName: String, password: String, completionHandler: (result: AnyObject!, error: NSError?) -> Void) {
         
         /* 1. Set the parameters */
         // No parameters to set...
@@ -50,7 +75,7 @@ class UdacityClient: NSObject {
             
             /* 5/6. Parse the data and use the data (happens in completion handler) */
             let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5)) /* subset response data! */
-            UdacityClient.parseJSONData(newData)
+            UdacityClient.parseJSONDataWithCompletionHandler(newData, completionHandler: completionHandler)
         }
         
         /* 7. Start the request */
@@ -58,19 +83,16 @@ class UdacityClient: NSObject {
     }
     
     // MARK: - Helpers
-    class func parseJSONData(data: NSData) {
+    class func parseJSONDataWithCompletionHandler(data: NSData, completionHandler: (result: AnyObject!, error: NSError?) -> Void) {
         var parsedResult: AnyObject!
         do {
             parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
         } catch {
-            print("Coult not parse the data as JSON: \(data)")
+            let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
+            completionHandler(result: nil, error: NSError(domain: "parseJSONWithCompletionHandler", code: 1, userInfo: userInfo))
         }
         
-        if let badCredentials: String? = parsedResult.valueForKey("error") as? String {
-            print(badCredentials)
-        }
-        print(parsedResult)
-        
+        completionHandler(result: parsedResult, error: nil)
     }
     
     // MARK: Shared Instance

@@ -110,6 +110,14 @@
                                     <action selector="signUpButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1Rk-CT-xvB"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Z3f-Gp-HAY">
+                                <rect key="frame" x="285" y="185" width="30" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="CcF-KY-X9Q"/>
+                                    <constraint firstAttribute="height" constant="30" id="UQ2-vH-NbO"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="1" green="0.54605263157894735" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -117,8 +125,10 @@
                             <constraint firstItem="hYV-fg-I3L" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1z8-eh-UJf"/>
                             <constraint firstAttribute="trailingMargin" secondItem="s17-gG-uFu" secondAttribute="trailing" id="325-Gs-e75"/>
                             <constraint firstItem="AZg-XG-lWI" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="40" id="5k6-Hn-5k3"/>
+                            <constraint firstItem="Z3f-Gp-HAY" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ag4-WT-eFu"/>
                             <constraint firstItem="Zrf-fe-eKf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ejm-UJ-chw"/>
                             <constraint firstAttribute="leadingMargin" secondItem="s17-gG-uFu" secondAttribute="leading" id="EtT-3R-xPb"/>
+                            <constraint firstItem="Z3f-Gp-HAY" firstAttribute="top" secondItem="AZg-XG-lWI" secondAttribute="bottom" id="LdI-cb-b7p"/>
                             <constraint firstAttribute="leadingMargin" secondItem="fgA-Lm-iMj" secondAttribute="leading" id="NfV-yi-PUi"/>
                             <constraint firstItem="RPy-L8-LRJ" firstAttribute="top" secondItem="AZg-XG-lWI" secondAttribute="bottom" constant="25" id="OSf-cz-r4J"/>
                             <constraint firstItem="s17-gG-uFu" firstAttribute="top" secondItem="RPy-L8-LRJ" secondAttribute="bottom" constant="15" id="PI3-oF-pa7"/>
@@ -127,6 +137,8 @@
                             <constraint firstAttribute="leadingMargin" secondItem="Zrf-fe-eKf" secondAttribute="leading" id="XKp-X0-LqP"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fgA-Lm-iMj" secondAttribute="trailing" id="ZqL-QJ-XrQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Zrf-fe-eKf" secondAttribute="trailing" id="djP-Nu-bos"/>
+                            <constraint firstItem="RPy-L8-LRJ" firstAttribute="top" secondItem="Z3f-Gp-HAY" secondAttribute="bottom" constant="3" id="gR8-3s-dR5"/>
+                            <constraint firstItem="Z3f-Gp-HAY" firstAttribute="top" secondItem="hYV-fg-I3L" secondAttribute="bottom" constant="8" id="hJ7-Fh-tIo"/>
                             <constraint firstItem="b26-3z-Ogq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="kUW-G3-drR"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="b26-3z-Ogq" secondAttribute="bottom" constant="55" id="lr2-aM-F98"/>
                             <constraint firstItem="Zrf-fe-eKf" firstAttribute="top" secondItem="fgA-Lm-iMj" secondAttribute="bottom" constant="20" id="m3r-tp-a4x"/>
@@ -134,11 +146,20 @@
                             <constraint firstItem="RPy-L8-LRJ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ppg-8d-a4o"/>
                             <constraint firstItem="AZg-XG-lWI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="r3a-qd-qbZ"/>
                             <constraint firstItem="fgA-Lm-iMj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tmS-4m-1s0"/>
+                            <constraint firstItem="Z3f-Gp-HAY" firstAttribute="top" secondItem="fgA-Lm-iMj" secondAttribute="bottom" constant="8" id="tzG-58-TYw"/>
                             <constraint firstItem="hYV-fg-I3L" firstAttribute="top" secondItem="Zrf-fe-eKf" secondAttribute="bottom" constant="8" id="wmN-NM-CoF"/>
                             <constraint firstAttribute="trailingMargin" secondItem="b26-3z-Ogq" secondAttribute="trailing" id="zOu-re-YH7"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="LdI-cb-b7p"/>
+                                <exclude reference="hJ7-Fh-tIo"/>
+                                <exclude reference="tzG-58-TYw"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="Z3f-Gp-HAY" id="NGg-bm-U3m"/>
                         <outlet property="emailLoginTextField" destination="s17-gG-uFu" id="HBL-8x-bTE"/>
                         <outlet property="passwordLoginTextField" destination="fgA-Lm-iMj" id="lg6-9f-H1j"/>
                     </connections>

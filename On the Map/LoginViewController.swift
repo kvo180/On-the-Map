@@ -14,6 +14,7 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var emailLoginTextField: UITextField!
     @IBOutlet weak var passwordLoginTextField: UITextField!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     let whitespaceSet = NSCharacterSet.whitespaceCharacterSet()
     let alertController = UIAlertController(title: "", message: "", preferredStyle: .Alert)
 
@@ -24,7 +25,8 @@ class LoginViewController: UIViewController {
         emailLoginTextField.delegate = self
         passwordLoginTextField.delegate = self
         
-
+        activityIndicator.alpha = 0.0
+        activityIndicator.stopAnimating()
         
         // Add tap recognizers
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
@@ -41,14 +43,26 @@ class LoginViewController: UIViewController {
 
     @IBAction func loginButtonPressed(sender: AnyObject) {
         
-        // Make sure login text fields aren't empty or doesn't include only whitespaces
+        // Make sure login text fields aren't empty or only whitespaces
         if emailLoginTextField.text!.stringByTrimmingCharactersInSet(whitespaceSet) != "" && passwordLoginTextField.text!.stringByTrimmingCharactersInSet(whitespaceSet) != "" {
             
-            UdacityClient.sharedInstance().authenticateLogin(UdacityClient.Methods.AuthenticationSession, userName: emailLoginTextField.text!, password: passwordLoginTextField.text!) { (result, success, errorString) in
+            activityIndicator.alpha = 1.0
+            activityIndicator.startAnimating()
+            
+            UdacityClient.sharedInstance().authenticateLogin(emailLoginTextField.text!, password: passwordLoginTextField.text!)  { (success, errorString) in
                 if success {
                     print("Login successful")
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.activityIndicator.alpha = 0.0
+                        self.activityIndicator.stopAnimating()
+                    }
                 } else {
-                    print("Login failed")
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.alertController.message = "Username/Password is invalid."
+                        self.presentViewController(self.alertController, animated: true, completion: nil)
+                        self.activityIndicator.alpha = 0.0
+                        self.activityIndicator.stopAnimating()
+                    }
                 }
             }
         } else {
@@ -59,7 +73,7 @@ class LoginViewController: UIViewController {
             } else {
                 alertController.message = "Password is empty."
             }
-
+            
             presentViewController(alertController, animated: true, completion: nil)
         }
     }
