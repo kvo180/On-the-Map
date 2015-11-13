@@ -161,6 +161,8 @@
                     <connections>
                         <outlet property="activityIndicator" destination="Z3f-Gp-HAY" id="NGg-bm-U3m"/>
                         <outlet property="emailLoginTextField" destination="s17-gG-uFu" id="HBL-8x-bTE"/>
+                        <outlet property="facebookLoginButton" destination="b26-3z-Ogq" id="hSb-jF-Ou7"/>
+                        <outlet property="loginButton" destination="Zrf-fe-eKf" id="OEY-9Q-uwW"/>
                         <outlet property="passwordLoginTextField" destination="fgA-Lm-iMj" id="lg6-9f-H1j"/>
                     </connections>
                 </viewController>

@@ -14,6 +14,8 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var emailLoginTextField: UITextField!
     @IBOutlet weak var passwordLoginTextField: UITextField!
+    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var facebookLoginButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     let whitespaceSet = NSCharacterSet.whitespaceCharacterSet()
     let alertController = UIAlertController(title: "", message: "", preferredStyle: .Alert)
@@ -24,6 +26,9 @@ class LoginViewController: UIViewController {
         
         emailLoginTextField.delegate = self
         passwordLoginTextField.delegate = self
+        
+        loginButton.showsTouchWhenHighlighted = true
+        facebookLoginButton.showsTouchWhenHighlighted = true
         
         activityIndicator.alpha = 0.0
         activityIndicator.stopAnimating()
@@ -48,20 +53,19 @@ class LoginViewController: UIViewController {
             
             activityIndicator.alpha = 1.0
             activityIndicator.startAnimating()
+            loginButton.enabled = false
             
             UdacityClient.sharedInstance().authenticateLogin(emailLoginTextField.text!, password: passwordLoginTextField.text!)  { (success, errorString) in
                 if success {
                     print("Login successful")
                     dispatch_async(dispatch_get_main_queue()) {
-                        self.activityIndicator.alpha = 0.0
-                        self.activityIndicator.stopAnimating()
+                        self.loginDoneWorking()
                     }
                 } else {
                     dispatch_async(dispatch_get_main_queue()) {
                         self.alertController.message = "Username/Password is invalid."
                         self.presentViewController(self.alertController, animated: true, completion: nil)
-                        self.activityIndicator.alpha = 0.0
-                        self.activityIndicator.stopAnimating()
+                        self.loginDoneWorking()
                     }
                 }
             }
@@ -92,6 +96,12 @@ class LoginViewController: UIViewController {
     // Close keyboard whenever user taps anywhere outside of keyboard:
     func dismissKeyboard() {
         view.endEditing(true)
+    }
+    
+    func loginDoneWorking() {
+        activityIndicator.alpha = 0.0
+        activityIndicator.stopAnimating()
+        loginButton.enabled = true
     }
 
 }
