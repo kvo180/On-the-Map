@@ -57,10 +57,11 @@ class LoginViewController: UIViewController {
                     print("Login successful")
                     dispatch_async(dispatch_get_main_queue()) {
                         self.loginDoneWorking()
+                        self.dismissKeyboard()
                     }
                 } else {
                     dispatch_async(dispatch_get_main_queue()) {
-                        self.alertController.message = "Username/Password is invalid."
+                        self.alertController.message = errorString
                         self.presentViewController(self.alertController, animated: true, completion: nil)
                         self.loginDoneWorking()
                     }

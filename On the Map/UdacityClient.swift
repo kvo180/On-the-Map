@@ -24,8 +24,7 @@ class UdacityClient: NSObject {
         taskForPOSTMethod(UdacityClient.Methods.AuthenticationSession, userName: username, password: password) { (result, error) in
             
             if let error = error {
-                print(error)
-                completionHandler(success: false, errorString: "Login failed - Account")
+                completionHandler(success: false, errorString: error.localizedDescription)
             } else {
                 if let account = result.valueForKey(UdacityClient.JSONResponseKeys.Account) as? NSDictionary {
                     if let userKey = account.valueForKey(UdacityClient.JSONResponseKeys.UserKey) as? String {
@@ -33,16 +32,11 @@ class UdacityClient: NSObject {
                         completionHandler(success: true, errorString: nil)
                     } else {
                         print("Could not find \(UdacityClient.JSONResponseKeys.UserKey) in \(account)")
-                        completionHandler(success: false, errorString: "Login failed - User Key")
+                        completionHandler(success: false, errorString: "Email/Password is invalid.")
                     }
                 } else {
                     print("Could not find \(UdacityClient.JSONResponseKeys.Account) in \(result)")
-                    completionHandler(success: false, errorString: "Login failed - Account")
-                    if let statusCode = result.valueForKey("status") {
-                        print(statusCode)
-                    } else {
-                        print("nope")
-                    }
+                    completionHandler(success: false, errorString: "Email/Password is invalid.")
                 }
             }
         }
@@ -69,24 +63,29 @@ class UdacityClient: NSObject {
             /* GUARD: Was there an error? */
             guard (error == nil) else {
                 print("There was an error with your request: \(error!)")
+                completionHandler(result: nil, error: error)
                 return
             }
             
-//            /* GUARD: Did we get a successful 2XX response? */
-//            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-//                if let response = response as? NSHTTPURLResponse {
-//                    print("Your request returned an invalid response! Status code: \(response.statusCode)!")
-//                } else if let response = response {
-//                    print("Your request returned an invalid response! Response: \(response)!")
-//                } else {
-//                    print("Your request returned an invalid response!")
-//                }
-//                return
-//            }
+            /* GUARD: Did we get a successful 2XX response? */
+            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                if let response = response as? NSHTTPURLResponse {
+                    print("Your request returned an invalid response! Status code: \(response.statusCode)!")
+                } else if let response = response {
+                    print("Your request returned an invalid response! Response: \(response)!")
+                } else {
+                    print("Your request returned an invalid response!")
+                }
+                let userInfo = [NSLocalizedDescriptionKey : "Email/Password is invalid."]
+                completionHandler(result: nil, error: NSError(domain: "statusCode", code: 2, userInfo: userInfo))
+                return
+            }
             
             /* GUARD: Was there any data returned? */
             guard let data = data else {
                 print("No data was returned by the request!")
+                let userInfo = [NSLocalizedDescriptionKey : "The connection timed out."]
+                completionHandler(result: nil, error: NSError(domain: "receiveData", code: 3, userInfo: userInfo))
                 return
             }
             
