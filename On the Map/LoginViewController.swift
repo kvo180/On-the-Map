@@ -26,10 +26,7 @@ class LoginViewController: UIViewController {
         
         emailLoginTextField.delegate = self
         passwordLoginTextField.delegate = self
-        
-        loginButton.showsTouchWhenHighlighted = true
-        facebookLoginButton.showsTouchWhenHighlighted = true
-        
+
         activityIndicator.alpha = 0.0
         activityIndicator.stopAnimating()
         

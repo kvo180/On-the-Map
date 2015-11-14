@@ -38,6 +38,11 @@ class UdacityClient: NSObject {
                 } else {
                     print("Could not find \(UdacityClient.JSONResponseKeys.Account) in \(result)")
                     completionHandler(success: false, errorString: "Login failed - Account")
+                    if let statusCode = result.valueForKey("status") {
+                        print(statusCode)
+                    } else {
+                        print("nope")
+                    }
                 }
             }
         }
@@ -63,9 +68,21 @@ class UdacityClient: NSObject {
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
-                print("There was an error with your request: \(error)")
+                print("There was an error with your request: \(error!)")
                 return
             }
+            
+//            /* GUARD: Did we get a successful 2XX response? */
+//            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+//                if let response = response as? NSHTTPURLResponse {
+//                    print("Your request returned an invalid response! Status code: \(response.statusCode)!")
+//                } else if let response = response {
+//                    print("Your request returned an invalid response! Response: \(response)!")
+//                } else {
+//                    print("Your request returned an invalid response!")
+//                }
+//                return
+//            }
             
             /* GUARD: Was there any data returned? */
             guard let data = data else {
