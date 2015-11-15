@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F2737421BF765C2000A1856 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2737411BF765C2000A1856 /* MapViewController.swift */; };
+		9F2737441BF77C37000A1856 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2737431BF77C37000A1856 /* TableViewController.swift */; };
 		9F9C628A1BEF6E1C0039DE46 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9C62891BEF6E1C0039DE46 /* AppDelegate.swift */; };
 		9F9C628C1BEF6E1C0039DE46 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9C628B1BEF6E1C0039DE46 /* LoginViewController.swift */; };
 		9F9C628F1BEF6E1C0039DE46 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F9C628D1BEF6E1C0039DE46 /* Main.storyboard */; };
@@ -17,6 +19,7 @@
 		9F9C62C61BF3046F0039DE46 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F9C62C31BF3046F0039DE46 /* Roboto-Medium.ttf */; };
 		9F9C62C71BF3046F0039DE46 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F9C62C41BF3046F0039DE46 /* Roboto-Regular.ttf */; };
 		9F9C62C81BF3046F0039DE46 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F9C62C51BF3046F0039DE46 /* Roboto-Thin.ttf */; };
+		9FA6AB9F1BF862E700D7D228 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6AB9E1BF862E700D7D228 /* TabBarController.swift */; };
 		9FD30D301BF564030034CB14 /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD30D2F1BF564030034CB14 /* UdacityClient.swift */; };
 		9FD30D321BF5658A0034CB14 /* UdacityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD30D311BF5658A0034CB14 /* UdacityConstants.swift */; };
 /* End PBXBuildFile section */
@@ -39,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9F2737411BF765C2000A1856 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		9F2737431BF77C37000A1856 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		9F9C62861BEF6E1C0039DE46 /* On the Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On the Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F9C62891BEF6E1C0039DE46 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F9C628B1BEF6E1C0039DE46 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -55,6 +60,7 @@
 		9F9C62C31BF3046F0039DE46 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		9F9C62C41BF3046F0039DE46 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		9F9C62C51BF3046F0039DE46 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
+		9FA6AB9E1BF862E700D7D228 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		9FD30D2F1BF564030034CB14 /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		9FD30D311BF5658A0034CB14 /* UdacityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -157,6 +163,9 @@
 			isa = PBXGroup;
 			children = (
 				9F9C628B1BEF6E1C0039DE46 /* LoginViewController.swift */,
+				9FA6AB9E1BF862E700D7D228 /* TabBarController.swift */,
+				9F2737411BF765C2000A1856 /* MapViewController.swift */,
+				9F2737431BF77C37000A1856 /* TableViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -331,8 +340,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F9C628C1BEF6E1C0039DE46 /* LoginViewController.swift in Sources */,
+				9F2737441BF77C37000A1856 /* TableViewController.swift in Sources */,
 				9FD30D321BF5658A0034CB14 /* UdacityConstants.swift in Sources */,
 				9F9C628A1BEF6E1C0039DE46 /* AppDelegate.swift in Sources */,
+				9FA6AB9F1BF862E700D7D228 /* TabBarController.swift in Sources */,
+				9F2737421BF765C2000A1856 /* MapViewController.swift in Sources */,
 				9FD30D301BF564030034CB14 /* UdacityClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

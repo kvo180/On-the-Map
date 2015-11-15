@@ -32,11 +32,11 @@ class UdacityClient: NSObject {
                         completionHandler(success: true, errorString: nil)
                     } else {
                         print("Could not find \(UdacityClient.JSONResponseKeys.UserKey) in \(account)")
-                        completionHandler(success: false, errorString: "Email/Password is invalid.")
+                        completionHandler(success: false, errorString: "User doesn't exist.")
                     }
                 } else {
                     print("Could not find \(UdacityClient.JSONResponseKeys.Account) in \(result)")
-                    completionHandler(success: false, errorString: "Email/Password is invalid.")
+                    completionHandler(success: false, errorString: "Account doesn't exist.")
                 }
             }
         }
@@ -84,8 +84,8 @@ class UdacityClient: NSObject {
             /* GUARD: Was there any data returned? */
             guard let data = data else {
                 print("No data was returned by the request!")
-                let userInfo = [NSLocalizedDescriptionKey : "The connection timed out."]
-                completionHandler(result: nil, error: NSError(domain: "receiveData", code: 3, userInfo: userInfo))
+                let userInfo = [NSLocalizedDescriptionKey : "Unable to retrieve data from server. Please try again."]
+                completionHandler(result: nil, error: NSError(domain: "data", code: 3, userInfo: userInfo))
                 return
             }
             

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Properties
     
@@ -19,14 +19,14 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     let whitespaceSet = NSCharacterSet.whitespaceCharacterSet()
     let alertController = UIAlertController(title: "", message: "", preferredStyle: .Alert)
-
+    
     // MARK: - UI Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         emailLoginTextField.delegate = self
         passwordLoginTextField.delegate = self
-
+        
         activityIndicator.alpha = 0.0
         activityIndicator.stopAnimating()
         
@@ -40,9 +40,9 @@ class LoginViewController: UIViewController {
         }
         alertController.addAction(okAction)
     }
-
+    
     // MARK: - IBActions
-
+    
     @IBAction func loginButtonPressed(sender: AnyObject) {
         
         // Make sure login text fields aren't empty or only whitespaces
@@ -55,10 +55,7 @@ class LoginViewController: UIViewController {
             UdacityClient.sharedInstance().authenticateLogin(emailLoginTextField.text!, password: passwordLoginTextField.text!)  { (success, errorString) in
                 if success {
                     print("Login successful")
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self.loginDoneWorking()
-                        self.dismissKeyboard()
-                    }
+                    self.completeLogin()
                 } else {
                     dispatch_async(dispatch_get_main_queue()) {
                         self.alertController.message = errorString
@@ -84,7 +81,7 @@ class LoginViewController: UIViewController {
         
         let signUpPageURL = NSURL(string: "https://www.udacity.com/account/auth#!/signup")
         UIApplication.sharedApplication().openURL(signUpPageURL!)
-
+        
     }
     
     @IBAction func facebookSignInButtonPressed(sender: AnyObject) {
@@ -101,14 +98,21 @@ class LoginViewController: UIViewController {
         activityIndicator.stopAnimating()
         loginButton.enabled = true
     }
-
-}
-
-// MARK: - UITextField Delegate Methods
-extension LoginViewController: UITextFieldDelegate {
     
+    func completeLogin() {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.loginDoneWorking()
+            self.dismissKeyboard()
+            
+            let controller = self.storyboard?.instantiateViewControllerWithIdentifier("StudentLocationsNavigationController") as! UINavigationController
+            self.presentViewController(controller, animated: true, completion: nil)
+        }
+    }
+    
+    // MARK: - UITextField Delegate Methods
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
 }
+
