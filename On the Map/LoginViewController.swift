@@ -103,6 +103,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         dispatch_async(dispatch_get_main_queue()) {
             self.loginDoneWorking()
             self.dismissKeyboard()
+            self.emailLoginTextField.text = nil
+            self.passwordLoginTextField.text = nil
             
             let controller = self.storyboard?.instantiateViewControllerWithIdentifier("StudentLocationsNavigationController") as! UINavigationController
             self.presentViewController(controller, animated: true, completion: nil)

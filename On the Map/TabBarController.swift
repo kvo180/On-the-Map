@@ -19,16 +19,30 @@ class TabBarController: UITabBarController {
         navigationItem.rightBarButtonItems = [refreshButton, pinButton]
     }
     
-    // MARK: - Utilities
+    // MARK: - Bar Button Actions
     func logoutButtonPressed() {
-        print("Logout button pressed")
+        UdacityClient.sharedInstance().logoutSession() { (success, errorString) in
+            if success {
+                print("Logout successful")
+                self.completeLogout()
+            } else {
+                print(errorString)
+            }
+        }
     }
     
     func refreshDataSet() {
-        print("data set refreshed")
+        print("Data set refreshed")
     }
     
     func presentPostingView() {
         print("Posting view presented")
+    }
+    
+    // MARK: - Utilities
+    func completeLogout() {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
 }
