@@ -23,6 +23,9 @@
 		9FA6ABB51BF99D4E00D7D228 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FA6ABB31BF99D4E00D7D228 /* FBSDKCoreKit.framework */; };
 		9FA6ABB61BF99D4E00D7D228 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FA6ABB41BF99D4E00D7D228 /* FBSDKLoginKit.framework */; };
 		9FA6ABB81BFADC7200D7D228 /* UdacityConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6ABB71BFADC7200D7D228 /* UdacityConvenience.swift */; };
+		9FA6ABBD1BFB283D00D7D228 /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6ABBC1BFB283D00D7D228 /* ParseClient.swift */; };
+		9FA6ABBF1BFB437D00D7D228 /* ParseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6ABBE1BFB437D00D7D228 /* ParseConstants.swift */; };
+		9FA6ABC11BFB4BF400D7D228 /* ParseConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6ABC01BFB4BF400D7D228 /* ParseConvenience.swift */; };
 		9FD30D301BF564030034CB14 /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD30D2F1BF564030034CB14 /* UdacityClient.swift */; };
 		9FD30D321BF5658A0034CB14 /* UdacityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD30D311BF5658A0034CB14 /* UdacityConstants.swift */; };
 /* End PBXBuildFile section */
@@ -67,6 +70,9 @@
 		9FA6ABB31BF99D4E00D7D228 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		9FA6ABB41BF99D4E00D7D228 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		9FA6ABB71BFADC7200D7D228 /* UdacityConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConvenience.swift; sourceTree = "<group>"; };
+		9FA6ABBC1BFB283D00D7D228 /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
+		9FA6ABBE1BFB437D00D7D228 /* ParseConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConstants.swift; sourceTree = "<group>"; };
+		9FA6ABC01BFB4BF400D7D228 /* ParseConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConvenience.swift; sourceTree = "<group>"; };
 		9FD30D2F1BF564030034CB14 /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		9FD30D311BF5658A0034CB14 /* UdacityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -198,10 +204,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9FA6ABBB1BFB282C00D7D228 /* Parse */ = {
+			isa = PBXGroup;
+			children = (
+				9FA6ABBE1BFB437D00D7D228 /* ParseConstants.swift */,
+				9FA6ABC01BFB4BF400D7D228 /* ParseConvenience.swift */,
+				9FA6ABBC1BFB283D00D7D228 /* ParseClient.swift */,
+			);
+			name = Parse;
+			sourceTree = "<group>";
+		};
 		9FD30D2C1BF4A96B0034CB14 /* Clients */ = {
 			isa = PBXGroup;
 			children = (
-				9FD30D2E1BF4A9760034CB14 /* Facebook */,
+				9FA6ABBB1BFB282C00D7D228 /* Parse */,
 				9FD30D2D1BF4A9700034CB14 /* Udacity */,
 			);
 			name = Clients;
@@ -215,13 +231,6 @@
 				9FD30D2F1BF564030034CB14 /* UdacityClient.swift */,
 			);
 			name = Udacity;
-			sourceTree = "<group>";
-		};
-		9FD30D2E1BF4A9760034CB14 /* Facebook */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Facebook;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -358,8 +367,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FA6ABC11BFB4BF400D7D228 /* ParseConvenience.swift in Sources */,
+				9FA6ABBD1BFB283D00D7D228 /* ParseClient.swift in Sources */,
 				9F9C628C1BEF6E1C0039DE46 /* LoginViewController.swift in Sources */,
 				9F2737441BF77C37000A1856 /* TableViewController.swift in Sources */,
+				9FA6ABBF1BFB437D00D7D228 /* ParseConstants.swift in Sources */,
 				9FD30D321BF5658A0034CB14 /* UdacityConstants.swift in Sources */,
 				9FA6ABB81BFADC7200D7D228 /* UdacityConvenience.swift in Sources */,
 				9F9C628A1BEF6E1C0039DE46 /* AppDelegate.swift in Sources */,

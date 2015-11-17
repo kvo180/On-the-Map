@@ -12,14 +12,15 @@ import FBSDKLoginKit
 
 class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
     
-    let loginManager = FBSDKLoginManager()
+    // MARK: - Properties
+    var alertController: UIAlertController!
     
     override func viewDidLoad() {
         
         /* Create and set the left navigation bar buttons */
         // Check if FB Access token exists, then create corresponding bar button
         if FBSDKAccessToken.currentAccessToken() != nil {
-            let fbButtonRect = CGRect(x: 0.0, y: 0.0, width: 84.0, height: 30.0)
+            let fbButtonRect = CGRectMake(0.0, 0.0, 84.0, 30.0)
             let fbButton = FBSDKLoginButton(frame: fbButtonRect)
             fbButton.delegate = self
             navigationItem.leftBarButtonItem = UIBarButtonItem(customView: fbButton)
@@ -30,11 +31,19 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
         let refreshButton = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "refreshDataSet")
         let pinButton = UIBarButtonItem(image: UIImage(named: "pin"), style: .Plain, target: self, action: "presentPostingView")
         navigationItem.rightBarButtonItems = [refreshButton, pinButton]
+        
+        // Add alert controller action
+        alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+        let okAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
+        alertController.addAction(okAction)
+        
+        // GET Student Locations
+        refreshDataSet()
     }
     
     // MARK: - Bar Button Actions
     func logoutButtonTouchUp() {
-        let confirmLogoutController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let confirmLogoutController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         let logoutAction = UIAlertAction(title: "Log Out", style: .Destructive) { action in
             self.deleteCurrentSession()
         }
@@ -46,10 +55,18 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
     }
 
     func refreshDataSet() {
-        print("Data set refreshed")
         
         // GET Student Locations
-        print("**GET Student Locations**")
+        ParseClient.sharedInstance().getStudentLocations() { (success, errorString) in
+            if success {
+                print("Student Locations data downloaded successfully")
+            } else {
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.alertController.message = errorString
+                    self.presentViewController(self.alertController, animated: true, completion: nil)
+                }
+            }
+        }
     }
     
     func presentPostingView() {
@@ -62,7 +79,6 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
     }
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
-        loginManager.logOut()
         print("Facebook logged out")
         deleteCurrentSession()
     }

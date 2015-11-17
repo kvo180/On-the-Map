@@ -11,8 +11,6 @@ extension UdacityClient {
     // MARK: - Constants 
     struct Constants {
         
-        // MARK: API Keys
-        
         // MARK: URLs
         static let baseURLSecure: String = "https://www.udacity.com/api/"
     }
@@ -32,13 +30,10 @@ extension UdacityClient {
         
         // MARK: Account
         static let Account = "account"
-        static let Registered = "registered"
         static let UserKey = "key"
         
         // MARK: Session
         static let Session = "session"
-        static let SessionID = "id"
-        static let Expiration = "expiration"
     }
 
 }

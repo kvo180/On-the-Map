@@ -5,8 +5,9 @@
 //  Created by Khoa Vo on 11/12/15.
 //  Copyright © 2015 AppSynth. All rights reserved.
 //
+//  Helper methods obtained from TheMovieManager by Jarrod Parkes on 2/11/15.
 
-import Foundation
+import UIKit
 import FBSDKCoreKit
 
 class UdacityClient: NSObject {
@@ -34,25 +35,40 @@ class UdacityClient: NSObject {
                 return
             }
             
+            /* GUARD: Did we get a successful 2XX response? */
+            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                if let response = response as? NSHTTPURLResponse {
+                    
+                    let localizedResponse = NSHTTPURLResponse.localizedStringForStatusCode(response.statusCode)
+                    print("Your request returned an invalid response! Status code: \(response.statusCode). Description: \(localizedResponse).")
+                    
+                    // Set error message if login credentials are invalid
+                    if response.statusCode == 403 {
+                        let userInfo = [NSLocalizedDescriptionKey : "Email/Password is invalid."]
+                        completionHandler(result: nil, error: NSError(domain: "statusCode", code: 2, userInfo: userInfo))
+                    } else {
+                        let userInfo = [NSLocalizedDescriptionKey : "\(response.statusCode) - \(localizedResponse)"]
+                        completionHandler(result: nil, error: NSError(domain: "statusCode", code: 2, userInfo: userInfo))
+                    }
+                    
+                } else if let response = response {
+                    print("Your request returned an invalid response! Response: \(response)")
+                    let userInfo = [NSLocalizedDescriptionKey : "The request returned an invalid response code."]
+                    completionHandler(result: nil, error: NSError(domain: "statusCode", code: 2, userInfo: userInfo))
+                    
+                } else {
+                    print("Your request returned an invalid response!")
+                    let userInfo = [NSLocalizedDescriptionKey : "The request returned an invalid response code."]
+                    completionHandler(result: nil, error: NSError(domain: "statusCode", code: 3, userInfo: userInfo))
+                }
+                return
+            }
+            
             /* GUARD: Was there any data returned? */
             guard let data = data else {
                 print("No data was returned by the request!")
                 let userInfo = [NSLocalizedDescriptionKey : "Unable to retrieve data from server."]
-                completionHandler(result: nil, error: NSError(domain: "data", code: 3, userInfo: userInfo))
-                return
-            }
-            
-            /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                if let response = response as? NSHTTPURLResponse {
-                    print("Your request returned an invalid response! Status code: \(response.statusCode)!")
-                } else if let response = response {
-                    print("Your request returned an invalid response! Response: \(response)!")
-                } else {
-                    print("Your request returned an invalid response!")
-                }
-                let userInfo = [NSLocalizedDescriptionKey : "Email/Password is invalid."]
-                completionHandler(result: nil, error: NSError(domain: "statusCode", code: 2, userInfo: userInfo)) // Optimize error description!!!!!!!
+                completionHandler(result: nil, error: NSError(domain: "data", code: 4, userInfo: userInfo))
                 return
             }
             
@@ -65,7 +81,7 @@ class UdacityClient: NSObject {
         task.resume()
     }
     
-    // MARK: - Helpers
+    // MARK: - Configure URL Requests
     class func configureURLRequestForPOSTSession(userName: String, password: String) -> NSMutableURLRequest {
         
         /* 1. Set the parameters */
@@ -79,6 +95,24 @@ class UdacityClient: NSObject {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.HTTPBody = "{\"udacity\": {\"username\": \"\(userName)\", \"password\": \"\(password)\"}}".dataUsingEncoding(NSUTF8StringEncoding)
+        
+        return request
+    }
+    
+    class func configureURLRequestForPOSTFacebookSession(accessToken: String) -> NSMutableURLRequest {
+        
+        /* 1. Set the parameters */
+        // No parameters to set...
+        
+        /* 2/3. Build the URL and configure the request */
+        let urlString = Constants.baseURLSecure + UdacityClient.Methods.AuthenticationSession
+        let url = NSURL(string: urlString)!
+        let request = NSMutableURLRequest(URL: url)
+        
+        request.HTTPMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.HTTPBody = "{\"facebook_mobile\": {\"access_token\": \"\(accessToken)\"}}".dataUsingEncoding(NSUTF8StringEncoding)
         
         return request
     }
@@ -107,24 +141,6 @@ class UdacityClient: NSObject {
         return request
     }
     
-    class func configureURLRequestForPOSTFacebookSession(accessToken: String) -> NSMutableURLRequest {
-        
-        /* 1. Set the parameters */
-        // No parameters to set...
-        
-        /* 2/3. Build the URL and configure the request */
-        let urlString = Constants.baseURLSecure + UdacityClient.Methods.AuthenticationSession
-        let url = NSURL(string: urlString)!
-        let request = NSMutableURLRequest(URL: url)
-        
-        request.HTTPMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.HTTPBody = "{\"facebook_mobile\": {\"access_token\": \"\(accessToken)\"}}".dataUsingEncoding(NSUTF8StringEncoding)
-        
-        return request
-    }
-    
     class func configureURLRequestForGETUserData() -> NSMutableURLRequest {
         
         /* 1. Set the parameters */
@@ -138,6 +154,8 @@ class UdacityClient: NSObject {
         return request
     }
     
+    
+    // MARK: - Helpers
     class func parseJSONDataWithCompletionHandler(data: NSData, completionHandler: (result: AnyObject!, error: NSError?) -> Void) {
         var parsedResult: AnyObject!
         do {
@@ -148,6 +166,26 @@ class UdacityClient: NSObject {
         }
         
         completionHandler(result: parsedResult, error: nil)
+    }
+    
+    class func escapedParameters(parameters: [String : AnyObject]) -> String {
+        
+        var urlVars = [String]()
+        
+        for (key, value) in parameters {
+            
+            /* Make sure that it is a string value */
+            let stringValue = "\(value)"
+            
+            /* Escape it */
+            let escapedValue = stringValue.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+            
+            /* Append it */
+            urlVars += [key + "=" + "\(escapedValue!)"]
+            
+        }
+        
+        return (!urlVars.isEmpty ? "?" : "") + urlVars.joinWithSeparator("&")
     }
     
     // MARK: Shared Instance

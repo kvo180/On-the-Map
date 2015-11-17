@@ -20,7 +20,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
     @IBOutlet weak var facebookLoginButton: FBSDKLoginButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     let whitespaceSet = NSCharacterSet.whitespaceCharacterSet()
-    let alertController = UIAlertController(title: "", message: "", preferredStyle: .Alert)
+    var alertController: UIAlertController!
     
     // MARK: - UI Lifecycle
     override func viewDidLoad() {
@@ -45,7 +45,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
         
-        // Add alert controller action
+        // Configure alert controller and add action
+        alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)
         let okAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
         alertController.addAction(okAction)
         
@@ -145,9 +146,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
         
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("StudentLocationsNavigationController") as! UINavigationController
         self.presentViewController(controller, animated: true, completion: nil)
-        
-        // GET Student Locations
-        print("**GET Student Locations**")
     }
     
     // MARK: - Facebook Login Methods
@@ -157,6 +155,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
         
         if error != nil {
             print(error.localizedDescription)
+            alertController.message = error.localizedDescription
+            presentViewController(self.alertController, animated: true, completion: nil)
             stopActivityIndicator()
             return
         } else if result.isCancelled {
