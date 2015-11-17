@@ -29,13 +29,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
         // Configure login button
         loginButton.layer.cornerRadius = 3
         
-        // Check if FB access token exists
-        if FBSDKAccessToken.currentAccessToken() == nil {
-            print("Not logged in...")
-        } else {
-            print("Logged in...")
-        }
-        
         // Configure Facebook login button
         facebookLoginButton.readPermissions = ["public_profile", "email", "user_friends"]
         facebookLoginButton.delegate = self
@@ -55,6 +48,30 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
         // Add alert controller action
         let okAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
         alertController.addAction(okAction)
+        
+        // Check if FB access token exists. If true, implement login to Udacity
+        if let accessToken = FBSDKAccessToken.currentAccessToken() {
+            
+            startActivityIndicator()
+            
+            UdacityClient.sharedInstance().loginWithFacebook(accessToken.tokenString) { (success, errorString) in
+                if success {
+                    print("Login with Facebook successful")
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.completeLogin()
+                        self.stopActivityIndicator()
+                    }
+                } else {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.alertController.message = errorString
+                        self.presentViewController(self.alertController, animated: true, completion: nil)
+                        self.stopActivityIndicator()
+                    }
+                }
+            }
+        } else {
+            print("Facebook not logged in...")
+        }
     }
     
     // MARK: - IBActions
@@ -108,6 +125,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
     }
     
     // MARK: - Utilities
+    
     // Close keyboard whenever user taps anywhere outside of keyboard:
     func dismissKeyboard() {
         view.endEditing(true)
@@ -148,7 +166,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
             if let accessToken = result.token {
                 UdacityClient.sharedInstance().loginWithFacebook(accessToken.tokenString) { (success, errorString) in
                     if success {
-                        print("Facebook Login successful")
+                        print("Login with Facebook successful")
                         dispatch_async(dispatch_get_main_queue()) {
                             self.completeLogin()
                             self.stopActivityIndicator()

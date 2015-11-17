@@ -63,7 +63,7 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
         loginManager.logOut()
-        print("FB logged out")
+        print("Facebook logged out")
         deleteCurrentSession()
     }
     
