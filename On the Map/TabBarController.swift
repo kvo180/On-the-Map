@@ -12,9 +12,6 @@ import FBSDKLoginKit
 
 class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
     
-    // MARK: - Properties
-    var alertController: UIAlertController!
-    
     override func viewDidLoad() {
         
         /* Create and set the left navigation bar buttons */
@@ -31,12 +28,7 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
         let refreshButton = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "refreshDataSet")
         let pinButton = UIBarButtonItem(image: UIImage(named: "pin"), style: .Plain, target: self, action: "presentPostingView")
         navigationItem.rightBarButtonItems = [refreshButton, pinButton]
-        
-        // Add alert controller action
-        alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)
-        let okAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
-        alertController.addAction(okAction)
-        
+    
         // GET Student Locations
         refreshDataSet()
     }
@@ -61,9 +53,13 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
             if success {
                 print("Student Locations data downloaded successfully")
             } else {
+                
+                let alertController = UIAlertController(title: "", message: errorString, preferredStyle: UIAlertControllerStyle.Alert)
+                let okAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
+                alertController.addAction(okAction)
+                
                 dispatch_async(dispatch_get_main_queue()) {
-                    self.alertController.message = errorString
-                    self.presentViewController(self.alertController, animated: true, completion: nil)
+                    self.presentViewController(alertController, animated: true, completion: nil)
                 }
             }
         }
