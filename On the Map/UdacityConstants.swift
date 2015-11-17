@@ -11,6 +11,8 @@ extension UdacityClient {
     // MARK: - Constants 
     struct Constants {
         
+        // MARK: API Keys
+        
         // MARK: URLs
         static let baseURLSecure: String = "https://www.udacity.com/api/"
     }

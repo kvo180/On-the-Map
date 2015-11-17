@@ -7,15 +7,17 @@
 //
 
 import UIKit
+import FBSDKCoreKit
+import FBSDKLoginKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButtonDelegate {
     
     // MARK: - Properties
     
     @IBOutlet weak var emailLoginTextField: UITextField!
     @IBOutlet weak var passwordLoginTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var facebookLoginButton: UIButton!
+    @IBOutlet weak var facebookLoginButton: FBSDKLoginButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     let whitespaceSet = NSCharacterSet.whitespaceCharacterSet()
     let alertController = UIAlertController(title: "", message: "", preferredStyle: .Alert)
@@ -24,9 +26,25 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Configure login button
+        loginButton.layer.cornerRadius = 3
+        
+        // Check if FB access token exists
+        if FBSDKAccessToken.currentAccessToken() == nil {
+            print("Not logged in...")
+        } else {
+            print("Logged in...")
+        }
+        
+        // Configure Facebook login button
+        facebookLoginButton.readPermissions = ["public_profile", "email", "user_friends"]
+        facebookLoginButton.delegate = self
+        
+        // Set text field delegates
         emailLoginTextField.delegate = self
         passwordLoginTextField.delegate = self
         
+        // Initialize activity indicator
         activityIndicator.alpha = 0.0
         activityIndicator.stopAnimating()
         
@@ -35,56 +53,58 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         view.addGestureRecognizer(tap)
         
         // Add alert controller action
-        let okAction = UIAlertAction(title: "Dismiss", style: .Default) { action in
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
+        let okAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
         alertController.addAction(okAction)
     }
     
     // MARK: - IBActions
     
-    @IBAction func loginButtonPressed(sender: AnyObject) {
+    @IBAction func loginButtonTouchUp(sender: AnyObject) {
         
         // Make sure login text fields aren't empty or only whitespaces
         if emailLoginTextField.text!.stringByTrimmingCharactersInSet(whitespaceSet) != "" && passwordLoginTextField.text!.stringByTrimmingCharactersInSet(whitespaceSet) != "" {
             
-            activityIndicator.alpha = 1.0
-            activityIndicator.startAnimating()
-            loginButton.enabled = false
+            startActivityIndicator()
+            loginButton.enabled = false // Disable loginButton to prevent multiple instances of NSURLRequests
             
             UdacityClient.sharedInstance().authenticateLogin(emailLoginTextField.text!, password: passwordLoginTextField.text!)  { (success, errorString) in
                 if success {
                     print("Login successful")
-                    self.completeLogin()
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.dismissKeyboard()
+                        self.completeLogin()
+                        self.stopActivityIndicator()
+                        self.loginButton.enabled = true
+                        self.emailLoginTextField.text = nil
+                        self.passwordLoginTextField.text = nil
+                        }
                 } else {
                     dispatch_async(dispatch_get_main_queue()) {
                         self.alertController.message = errorString
                         self.presentViewController(self.alertController, animated: true, completion: nil)
-                        self.loginDoneWorking()
+                        self.stopActivityIndicator()
+                        self.loginButton.enabled = true
                     }
                 }
             }
         } else {
             if emailLoginTextField.text!.stringByTrimmingCharactersInSet(whitespaceSet) == "" && passwordLoginTextField.text!.stringByTrimmingCharactersInSet(whitespaceSet) == "" {
-                alertController.message = "Email/Password is empty."
+                alertController.message = "Please enter your login information."
             } else if emailLoginTextField.text!.stringByTrimmingCharactersInSet(whitespaceSet) == "" {
-                alertController.message = "Email is empty."
+                alertController.message = "Please enter your email."
             } else {
-                alertController.message = "Password is empty."
+                alertController.message = "Please enter your password."
             }
             
             presentViewController(alertController, animated: true, completion: nil)
         }
     }
     
-    @IBAction func signUpButtonPressed(sender: AnyObject) {
+    @IBAction func signUpButtonTouchUp(sender: AnyObject) {
         
         let signUpPageURL = NSURL(string: "https://www.udacity.com/account/auth#!/signup")
         UIApplication.sharedApplication().openURL(signUpPageURL!)
         
-    }
-    
-    @IBAction func facebookSignInButtonPressed(sender: AnyObject) {
     }
     
     // MARK: - Utilities
@@ -93,22 +113,60 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         view.endEditing(true)
     }
     
-    func loginDoneWorking() {
+    func startActivityIndicator() {
+        activityIndicator.alpha = 1.0
+        activityIndicator.startAnimating()
+    }
+    
+    func stopActivityIndicator() {
         activityIndicator.alpha = 0.0
         activityIndicator.stopAnimating()
-        loginButton.enabled = true
     }
     
     func completeLogin() {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.loginDoneWorking()
-            self.dismissKeyboard()
-            self.emailLoginTextField.text = nil
-            self.passwordLoginTextField.text = nil
-            
-            let controller = self.storyboard?.instantiateViewControllerWithIdentifier("StudentLocationsNavigationController") as! UINavigationController
-            self.presentViewController(controller, animated: true, completion: nil)
+        
+        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("StudentLocationsNavigationController") as! UINavigationController
+        self.presentViewController(controller, animated: true, completion: nil)
+        
+        // GET Student Locations
+        print("**GET Student Locations**")
+    }
+    
+    // MARK: - Facebook Login Methods
+    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+        
+        startActivityIndicator()
+        
+        if error != nil {
+            print(error.localizedDescription)
+            stopActivityIndicator()
+            return
+        } else if result.isCancelled {
+            print("Facebook login canceled")
+            stopActivityIndicator()
+        } else {
+            if let accessToken = result.token {
+                UdacityClient.sharedInstance().loginWithFacebook(accessToken.tokenString) { (success, errorString) in
+                    if success {
+                        print("Facebook Login successful")
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.completeLogin()
+                            self.stopActivityIndicator()
+                        }
+                    } else {
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.alertController.message = errorString
+                            self.presentViewController(self.alertController, animated: true, completion: nil)
+                            self.stopActivityIndicator()
+                        }
+                    }
+                }
+            }
         }
+    }
+    
+    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
+        // This method is not needed in this view controller
     }
     
     // MARK: - UITextField Delegate Methods

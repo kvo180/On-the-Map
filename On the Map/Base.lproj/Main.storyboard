@@ -9,7 +9,6 @@
         <mutableArray key="Roboto-Medium.ttf">
             <string>Roboto-Medium</string>
             <string>Roboto-Medium</string>
-            <string>Roboto-Medium</string>
         </mutableArray>
         <mutableArray key="Roboto-Regular.ttf">
             <string>Roboto-Regular</string>
@@ -78,10 +77,10 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <state key="disabled">
-                                    <color key="titleColor" red="0.26054664878585854" green="0.26054664878585854" blue="0.26054664878585854" alpha="0.39189189189189189" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.2605466488" green="0.2605466488" blue="0.2605466488" alpha="0.39189189190000001" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="loginButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Pid-wy-gfw"/>
+                                    <action selector="loginButtonTouchUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vqV-Z4-hPK"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hYV-fg-I3L">
@@ -108,24 +107,17 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <action selector="signUpButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1Rk-CT-xvB"/>
+                                    <action selector="signUpButtonTouchUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Dgr-cM-FEe"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b26-3z-Ogq">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rBM-s9-ITU" customClass="FBSDKLoginButton">
                                 <rect key="frame" x="30" y="515" width="540" height="30"/>
                                 <animations/>
-                                <color key="backgroundColor" red="0.0" green="0.33552631578947362" blue="1" alpha="0.7567567567567568" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="15"/>
-                                <state key="normal" title="Login with Facebook">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <state key="disabled">
-                                    <color key="titleColor" red="0.2605466488" green="0.2605466488" blue="0.2605466488" alpha="0.39189189190000001" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="facebookSignInButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="r72-wO-7Jo"/>
-                                </connections>
-                            </button>
+                                <color key="backgroundColor" red="1" green="0.54605263159999995" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="rFR-LN-J5I"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="1" green="0.54605263157894735" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -136,6 +128,8 @@
                             <constraint firstAttribute="trailingMargin" secondItem="s17-gG-uFu" secondAttribute="trailing" constant="10" id="7je-No-FcS"/>
                             <constraint firstItem="Z3f-Gp-HAY" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ag4-WT-eFu"/>
                             <constraint firstAttribute="leadingMargin" secondItem="s17-gG-uFu" secondAttribute="leading" id="EtT-3R-xPb"/>
+                            <constraint firstItem="rBM-s9-ITU" firstAttribute="leading" secondItem="qkz-Yr-VJI" secondAttribute="leading" id="Icb-td-OA8"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="rBM-s9-ITU" secondAttribute="bottom" constant="55" id="KRY-Gl-sds"/>
                             <constraint firstItem="Z3f-Gp-HAY" firstAttribute="top" secondItem="AZg-XG-lWI" secondAttribute="bottom" id="LdI-cb-b7p"/>
                             <constraint firstAttribute="trailingMargin" secondItem="qkz-Yr-VJI" secondAttribute="trailing" id="M3F-HQ-meX"/>
                             <constraint firstItem="qkz-Yr-VJI" firstAttribute="leading" secondItem="cWI-4k-MoD" secondAttribute="leading" id="MIq-D0-OPn"/>
@@ -143,7 +137,6 @@
                             <constraint firstItem="s17-gG-uFu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="10" id="O60-bj-Qmt"/>
                             <constraint firstItem="RPy-L8-LRJ" firstAttribute="top" secondItem="AZg-XG-lWI" secondAttribute="bottom" constant="25" id="OSf-cz-r4J"/>
                             <constraint firstItem="s17-gG-uFu" firstAttribute="top" secondItem="RPy-L8-LRJ" secondAttribute="bottom" constant="15" id="PI3-oF-pa7"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="b26-3z-Ogq" secondAttribute="leading" id="RXu-80-Zza"/>
                             <constraint firstItem="s17-gG-uFu" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="UFR-Yc-Xw6"/>
                             <constraint firstItem="hYV-fg-I3L" firstAttribute="top" secondItem="qkz-Yr-VJI" secondAttribute="bottom" constant="8" id="UkM-FN-AQT"/>
                             <constraint firstItem="qkz-Yr-VJI" firstAttribute="top" secondItem="cWI-4k-MoD" secondAttribute="bottom" constant="20" id="dN9-Mj-tTj"/>
@@ -151,19 +144,15 @@
                             <constraint firstItem="RPy-L8-LRJ" firstAttribute="top" secondItem="Z3f-Gp-HAY" secondAttribute="bottom" constant="3" id="gR8-3s-dR5"/>
                             <constraint firstItem="Z3f-Gp-HAY" firstAttribute="top" secondItem="hYV-fg-I3L" secondAttribute="bottom" constant="8" id="hJ7-Fh-tIo"/>
                             <constraint firstAttribute="trailingMargin" secondItem="cWI-4k-MoD" secondAttribute="trailing" id="hm8-Ga-RRW"/>
-                            <constraint firstItem="b26-3z-Ogq" firstAttribute="trailing" secondItem="qkz-Yr-VJI" secondAttribute="trailing" id="hyM-42-boR"/>
                             <constraint firstAttribute="leadingMargin" secondItem="cWI-4k-MoD" secondAttribute="leading" id="jX5-qd-hUZ"/>
-                            <constraint firstItem="b26-3z-Ogq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="kUW-G3-drR"/>
                             <constraint firstItem="cWI-4k-MoD" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="lIo-xq-ohH"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="b26-3z-Ogq" secondAttribute="bottom" constant="55" id="lr2-aM-F98"/>
+                            <constraint firstItem="rBM-s9-ITU" firstAttribute="trailing" secondItem="qkz-Yr-VJI" secondAttribute="trailing" id="n4O-RD-uJR"/>
                             <constraint firstItem="RPy-L8-LRJ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ppg-8d-a4o"/>
                             <constraint firstItem="AZg-XG-lWI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="r3a-qd-qbZ"/>
-                            <constraint firstItem="b26-3z-Ogq" firstAttribute="leading" secondItem="qkz-Yr-VJI" secondAttribute="leading" id="r8f-fq-j6W"/>
                             <constraint firstItem="cWI-4k-MoD" firstAttribute="leading" secondItem="s17-gG-uFu" secondAttribute="leading" id="sZI-Xc-lc3"/>
                             <constraint firstItem="cWI-4k-MoD" firstAttribute="trailing" secondItem="s17-gG-uFu" secondAttribute="trailing" id="vSu-SE-aEx"/>
                             <constraint firstItem="qkz-Yr-VJI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="w2N-es-gz8"/>
                             <constraint firstItem="cWI-4k-MoD" firstAttribute="top" secondItem="s17-gG-uFu" secondAttribute="bottom" constant="10" id="yLa-zx-8EF"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="b26-3z-Ogq" secondAttribute="trailing" id="zOu-re-YH7"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -175,15 +164,13 @@
                                 <exclude reference="hJ7-Fh-tIo"/>
                                 <exclude reference="M3F-HQ-meX"/>
                                 <exclude reference="O2u-ey-szz"/>
-                                <exclude reference="RXu-80-Zza"/>
-                                <exclude reference="zOu-re-YH7"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="Z3f-Gp-HAY" id="NGg-bm-U3m"/>
                         <outlet property="emailLoginTextField" destination="s17-gG-uFu" id="HBL-8x-bTE"/>
-                        <outlet property="facebookLoginButton" destination="b26-3z-Ogq" id="hSb-jF-Ou7"/>
+                        <outlet property="facebookLoginButton" destination="rBM-s9-ITU" id="q2Z-AK-Mau"/>
                         <outlet property="loginButton" destination="qkz-Yr-VJI" id="k0S-2v-g5t"/>
                         <outlet property="passwordLoginTextField" destination="cWI-4k-MoD" id="3sy-Jw-sj0"/>
                     </connections>
@@ -314,7 +301,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fEb-fc-JYg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2164" y="180"/>
+            <point key="canvasLocation" x="2204" y="180"/>
         </scene>
     </scenes>
     <resources>

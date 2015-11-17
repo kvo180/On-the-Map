@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FBSDKCoreKit
 
 class UdacityClient: NSObject {
     
@@ -18,55 +19,6 @@ class UdacityClient: NSObject {
     override init() {
         super.init()
         session = NSURLSession.sharedSession()
-    }
-    
-    // MARK: - Authenticate Login
-    func authenticateLogin(username: String, password: String, completionHandler: (success: Bool, errorString: String?) -> Void) {
-        
-        let request = UdacityClient.configureURLRequestForPOSTSession(username, password: password)
-        
-        createDataTask(request) { (result, error) in
-            
-            if let error = error {
-                completionHandler(success: false, errorString: error.localizedDescription)
-            } else {
-                if let account = result.valueForKey(UdacityClient.JSONResponseKeys.Account) as? NSDictionary {
-                    if let userKey = account.valueForKey(UdacityClient.JSONResponseKeys.UserKey) as? String {
-                        print("Got userKey: \(userKey)")
-                        self.userKey = userKey
-                        completionHandler(success: true, errorString: nil)
-                    } else {
-                        print("Could not find \(UdacityClient.JSONResponseKeys.UserKey) in \(account)")
-                        completionHandler(success: false, errorString: "User not found.")
-                    }
-                } else {
-                    print("Could not find \(UdacityClient.JSONResponseKeys.Account) in \(result)")
-                    completionHandler(success: false, errorString: "Account not found.")
-                }
-            }
-        }
-    }
-    
-    // MARK: - Logout of Session
-    func logoutSession(completionHandler: (success: Bool, errorString: String?) -> Void) {
-        
-        let request = UdacityClient.configureURLRequestForDELETESession()
-        
-        createDataTask(request) { (result, error) in
-            
-            if let error = error {
-                completionHandler(success: false, errorString: error.localizedDescription)
-            } else {
-                // Assume that logout request is successful as long as the result data includes a 'session' dictionary
-                let session = result.valueForKey(UdacityClient.JSONResponseKeys.Session) as? NSDictionary
-                if session != nil {
-                   completionHandler(success: true, errorString: nil)
-                } else {
-                    print("Could not find \(UdacityClient.JSONResponseKeys.Session) in \(result)")
-                    completionHandler(success: false, errorString: "Session not found.")
-                }
-            }
-        }
     }
     
     // MARK: - dataTaskWithRequest
@@ -82,6 +34,14 @@ class UdacityClient: NSObject {
                 return
             }
             
+            /* GUARD: Was there any data returned? */
+            guard let data = data else {
+                print("No data was returned by the request!")
+                let userInfo = [NSLocalizedDescriptionKey : "Unable to retrieve data from server."]
+                completionHandler(result: nil, error: NSError(domain: "data", code: 3, userInfo: userInfo))
+                return
+            }
+            
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
                 if let response = response as? NSHTTPURLResponse {
@@ -92,15 +52,7 @@ class UdacityClient: NSObject {
                     print("Your request returned an invalid response!")
                 }
                 let userInfo = [NSLocalizedDescriptionKey : "Email/Password is invalid."]
-                completionHandler(result: nil, error: NSError(domain: "statusCode", code: 2, userInfo: userInfo))
-                return
-            }
-            
-            /* GUARD: Was there any data returned? */
-            guard let data = data else {
-                print("No data was returned by the request!")
-                let userInfo = [NSLocalizedDescriptionKey : "Unable to retrieve data from server."]
-                completionHandler(result: nil, error: NSError(domain: "data", code: 3, userInfo: userInfo))
+                completionHandler(result: nil, error: NSError(domain: "statusCode", code: 2, userInfo: userInfo)) // Optimize error description!!!!!!!
                 return
             }
             
@@ -151,6 +103,37 @@ class UdacityClient: NSObject {
         if let xsrfCookie = xsrfCookie {
             request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
         }
+        
+        return request
+    }
+    
+    class func configureURLRequestForPOSTFacebookSession(accessToken: String) -> NSMutableURLRequest {
+        
+        /* 1. Set the parameters */
+        // No parameters to set...
+        
+        /* 2/3. Build the URL and configure the request */
+        let urlString = Constants.baseURLSecure + UdacityClient.Methods.AuthenticationSession
+        let url = NSURL(string: urlString)!
+        let request = NSMutableURLRequest(URL: url)
+        
+        request.HTTPMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.HTTPBody = "{\"facebook_mobile\": {\"access_token\": \"\(accessToken)\"}}".dataUsingEncoding(NSUTF8StringEncoding)
+        
+        return request
+    }
+    
+    class func configureURLRequestForGETUserData() -> NSMutableURLRequest {
+        
+        /* 1. Set the parameters */
+        // No parameters to set...
+        
+        /* 2/3. Build the URL and configure the request */
+        let urlString = Constants.baseURLSecure + UdacityClient.Methods.UserAccount + "/" + UdacityClient.sharedInstance().userKey!
+        let url = NSURL(string: urlString)!
+        let request = NSMutableURLRequest(URL: url)
         
         return request
     }
