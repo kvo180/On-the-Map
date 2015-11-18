@@ -22,11 +22,11 @@ extension ParseClient {
             if let error = error {
                 completionHandler(success: false, errorString: error.localizedDescription)
             } else {
-                if let results = result.valueForKey(ParseClient.JSONResponseKeys.Results) as? NSArray {
+                if let results = result.valueForKey(ParseClient.JSONResponseKeys.StudentResults) as? [[String : AnyObject]] {
                     print(results)
                     completionHandler(success: true, errorString: nil)
                 } else {
-                    print("Could not find \(ParseClient.JSONResponseKeys.Results) in \(result)")
+                    print("Could not find \(ParseClient.JSONResponseKeys.StudentResults) in \(result)")
                     completionHandler(success: false, errorString: "No results returned from server.")
                 }
             }

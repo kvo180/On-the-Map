@@ -26,6 +26,7 @@
 		9FA6ABBD1BFB283D00D7D228 /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6ABBC1BFB283D00D7D228 /* ParseClient.swift */; };
 		9FA6ABBF1BFB437D00D7D228 /* ParseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6ABBE1BFB437D00D7D228 /* ParseConstants.swift */; };
 		9FA6ABC11BFB4BF400D7D228 /* ParseConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6ABC01BFB4BF400D7D228 /* ParseConvenience.swift */; };
+		9FA6ABC31BFC21BE00D7D228 /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6ABC21BFC21BE00D7D228 /* StudentInformation.swift */; };
 		9FD30D301BF564030034CB14 /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD30D2F1BF564030034CB14 /* UdacityClient.swift */; };
 		9FD30D321BF5658A0034CB14 /* UdacityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD30D311BF5658A0034CB14 /* UdacityConstants.swift */; };
 /* End PBXBuildFile section */
@@ -73,6 +74,7 @@
 		9FA6ABBC1BFB283D00D7D228 /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
 		9FA6ABBE1BFB437D00D7D228 /* ParseConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConstants.swift; sourceTree = "<group>"; };
 		9FA6ABC01BFB4BF400D7D228 /* ParseConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConvenience.swift; sourceTree = "<group>"; };
+		9FA6ABC21BFC21BE00D7D228 /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
 		9FD30D2F1BF564030034CB14 /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		9FD30D311BF5658A0034CB14 /* UdacityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -170,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				9FD30D2C1BF4A96B0034CB14 /* Clients */,
+				9FA6ABC21BFC21BE00D7D228 /* StudentInformation.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -367,6 +370,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FA6ABC31BFC21BE00D7D228 /* StudentInformation.swift in Sources */,
 				9FA6ABC11BFB4BF400D7D228 /* ParseConvenience.swift in Sources */,
 				9FA6ABBD1BFB283D00D7D228 /* ParseClient.swift in Sources */,
 				9F9C628C1BEF6E1C0039DE46 /* LoginViewController.swift in Sources */,

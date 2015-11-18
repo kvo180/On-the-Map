@@ -34,6 +34,17 @@ extension ParseClient {
     // MARK: - JSON Response Keys
     struct JSONResponseKeys {
         
-        static let Results = "results"
+        // MARK: Students
+        static let StudentResults = "results"
+        static let UpdatedAt = "updatedAt"
+        static let Longitude = "longitude"
+        static let Latitude = "latitude"
+        static let ObjectID = "objectId"
+        static let LastName = "lastName"
+        static let FirstName = "firstName"
+        static let CreatedAt = "createdAt"
+        static let MediaURL = "mediaURL"
+        static let UniqueKey = "uniqueKey"
+        static let MapString = "mapString"
     }
 }
