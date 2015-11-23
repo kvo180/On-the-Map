@@ -21,19 +21,35 @@ struct StudentInformation {
     var mediaURL = ""
     var uniqueKey = ""
     var objectID = ""
-    var createdAt: NSDate?
-    var updatedAt: NSDate?
+//    var createdAt: NSDate?
+//    var updatedAt: NSDate?
     
     init(dictionary: [String : AnyObject]) {
         
-        firstName = dictionary[ParseClient.JSONResponseKeys.FirstName] as! String
-        lastName = dictionary[ParseClient.JSONResponseKeys.LastName] as! String
-        longitude = dictionary[ParseClient.JSONResponseKeys.Longitude] as! Double
-        latitude = dictionary[ParseClient.JSONResponseKeys.Latitude] as! Double
-        mapString = dictionary[ParseClient.JSONResponseKeys.MapString] as! String
-        mediaURL = dictionary[ParseClient.JSONResponseKeys.MediaURL] as! String
-        uniqueKey = dictionary[ParseClient.JSONResponseKeys.UniqueKey] as! String
-        objectID = dictionary[ParseClient.JSONResponseKeys.ObjectID] as! String
+        if let firstName = dictionary[ParseClient.JSONResponseKeys.FirstName] as? String {
+            self.firstName = firstName
+        }
+        if let lastName = dictionary[ParseClient.JSONResponseKeys.LastName] as? String {
+            self.lastName = lastName
+        }
+        if let longitude = dictionary[ParseClient.JSONResponseKeys.Longitude] as? Double {
+            self.longitude = longitude
+        }
+        if let latitude = dictionary[ParseClient.JSONResponseKeys.Latitude] as? Double {
+            self.latitude = latitude
+        }
+        if let mapString = dictionary[ParseClient.JSONResponseKeys.MapString] as? String {
+            self.mapString = mapString
+        }
+        if let mediaURL = dictionary[ParseClient.JSONResponseKeys.MediaURL] as? String {
+            self.mediaURL = mediaURL
+        }
+        if let uniqueKey = dictionary[ParseClient.JSONResponseKeys.UniqueKey] as? String {
+            self.uniqueKey = uniqueKey
+        }
+        if let objectID = dictionary[ParseClient.JSONResponseKeys.ObjectID] as? String {
+            self.objectID = objectID
+        }
     
     }
     

@@ -11,6 +11,10 @@ extension ParseClient {
     // MARK: - Constants
     struct Constants {
         
+        // MARK: API
+        static let AppID = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
+        static let APIKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
+        
         // MARK: URLs
         static let baseURLSecure: String = "https://api.parse.com/1/classes/StudentLocation"
     }
@@ -36,13 +40,13 @@ extension ParseClient {
         
         // MARK: Students
         static let StudentResults = "results"
-        static let UpdatedAt = "updatedAt"
+//        static let UpdatedAt = "updatedAt"
         static let Longitude = "longitude"
         static let Latitude = "latitude"
         static let ObjectID = "objectId"
         static let LastName = "lastName"
         static let FirstName = "firstName"
-        static let CreatedAt = "createdAt"
+//        static let CreatedAt = "createdAt"
         static let MediaURL = "mediaURL"
         static let UniqueKey = "uniqueKey"
         static let MapString = "mapString"

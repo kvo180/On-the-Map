@@ -13,6 +13,8 @@ class ParseClient: NSObject {
     // MARK: - Properties
     var session: NSURLSession!
     
+    var students: [StudentInformation] = [StudentInformation]()
+    
     // MARK: - Initializers
     override init() {
         super.init()
@@ -81,8 +83,8 @@ class ParseClient: NSObject {
         let urlString = Constants.baseURLSecure + UdacityClient.escapedParameters(parameters)
         let url = NSURL(string: urlString)!
         let request = NSMutableURLRequest(URL: url)
-        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+        request.addValue(ParseClient.Constants.AppID, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(ParseClient.Constants.APIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         
         return request
     }

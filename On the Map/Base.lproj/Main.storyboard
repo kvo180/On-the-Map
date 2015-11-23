@@ -237,7 +237,6 @@
         <!--Table View Controller-->
         <scene sceneID="2Xk-ZJ-GHA">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kIa-PN-P3K" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="z2L-mb-hZj" userLabel="Table View Controller" customClass="TableViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="FCk-KB-Xk1"/>
@@ -280,6 +279,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="List" image="list" selectedImage="list" id="kqz-PT-fcx"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kIa-PN-P3K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2967" y="569"/>
         </scene>

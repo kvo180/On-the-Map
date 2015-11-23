@@ -9,46 +9,63 @@
 import UIKit
 import MapKit
 
-/**
- * This view controller demonstrates the objects involved in displaying pins on a map.
- *
- * The map is a MKMapView.
- * The pins are represented by MKPointAnnotation instances.
- *
- * The view controller conforms to the MKMapViewDelegate so that it can receive a method
- * invocation when a pin annotation is tapped. It accomplishes this using two delegate
- * methods: one to put a small "info" button on the right side of each pin, and one to
- * respond when the "info" button is tapped.
- */
-
 class MapViewController: UIViewController, MKMapViewDelegate {
+    
+    var locations: [StudentInformation] = [StudentInformation]()
     
     // MARK: - Properties
     @IBOutlet weak var mapView: MKMapView!
-    
+
+    // MARK: - UI Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapView.delegate = self
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        getStudentData()
+    }
+    
+    // Get student locations
+    func getStudentData() {
         
-        // The "locations" array is an array of dictionary objects that are similar to the JSON
-        // data that you can download from parse.
-        let locations = hardCodedLocationData()
-        
-        // We will create an MKPointAnnotation for each dictionary in "locations". The
-        // point annotations will be stored in this array, and then provided to the map view.
+        ParseClient.sharedInstance().getStudentLocations() { (data, success, errorString) in
+            if success {
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.locations = data!
+                    self.configureAnnotations()
+                    print("Student Locations data downloaded successfully")
+                }
+                
+            } else {
+                
+                let alertController = UIAlertController(title: "", message: errorString, preferredStyle: UIAlertControllerStyle.Alert)
+                let okAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
+                alertController.addAction(okAction)
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
+    func configureAnnotations() {
+        // Create annotations array
         var annotations = [MKPointAnnotation()]
         
-        // The "locations" array is loaded with the sample data below. We are using the dictionaries
-        // to create map annotations. This would be more stylish if the dictionaries were being
-        // used to create custom structs. Perhaps StudentLocation structs.
-        for dictionary in locations {
-           
-            let lat = CLLocationDegrees(dictionary["latitude"] as! Double)
-            let long = CLLocationDegrees(dictionary["longitude"] as! Double)
+        // Configure annotations
+        for studentLocation in locations {
+
+            let lat = CLLocationDegrees(studentLocation.latitude)
+            let long = CLLocationDegrees(studentLocation.longitude)
             let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
             
-            let first = dictionary["firstName"] as! String
-            let last = dictionary["lastName"] as! String
-            let mediaURL = dictionary["mediaURL"] as! String
+            let first = studentLocation.firstName
+            let last = studentLocation.lastName
+            let mediaURL = studentLocation.mediaURL
             
             // Create the annotation and set its coordinate, title, and subtitle properties
             let annotation = MKPointAnnotation()
@@ -60,15 +77,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
         
         mapView.addAnnotations(annotations)
-        
     }
     
-    // MARK: - Utilities
-    
     // MARK: - MKMapViewDelegate Methods
-    // Here we create a view with a "right callout accessory view". You might choose to look into other
-    // decoration alternatives. Notice the similarity between this method and the cellForRowAtIndexPath
-    // method in TableViewDataSource.
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
         let reuseId = "pin"
@@ -89,65 +100,16 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     
-    // This delegate method is implemented to respond to taps. It opens the system browser
-    // to the URL specified in the annotationViews subtitle property.
+    // Respond to taps - open URL in browser
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        
         if control == view.rightCalloutAccessoryView {
-            let app = UIApplication.sharedApplication()
-            if let toOpen = view.annotation?.subtitle! {
-                app.openURL(NSURL(string: toOpen)!)
+            
+            if let url = view.annotation?.subtitle! {
+                
+                UIApplication.sharedApplication().openURL(NSURL(string: url)!)
             }
         }
     }
     
-    // MARK: - Sample Data
-    func hardCodedLocationData() -> [[String : AnyObject]] {
-        return  [
-            [
-                "createdAt" : "2015-02-24T22:27:14.456Z",
-                "firstName" : "Jessica",
-                "lastName" : "Uelmen",
-                "latitude" : 28.1461248,
-                "longitude" : -82.75676799999999,
-                "mapString" : "Tarpon Springs, FL",
-                "mediaURL" : "www.linkedin.com/in/jessicauelmen/en",
-                "objectId" : "kj18GEaWD8",
-                "uniqueKey" : 872458750,
-                "updatedAt" : "2015-03-09T22:07:09.593Z"
-            ], [
-                "createdAt" : "2015-02-24T22:35:30.639Z",
-                "firstName" : "Gabrielle",
-                "lastName" : "Miller-Messner",
-                "latitude" : 35.1740471,
-                "longitude" : -79.3922539,
-                "mapString" : "Southern Pines, NC",
-                "mediaURL" : "http://www.linkedin.com/pub/gabrielle-miller-messner/11/557/60/en",
-                "objectId" : "8ZEuHF5uX8",
-                "uniqueKey" : 2256298598,
-                "updatedAt" : "2015-03-11T03:23:49.582Z"
-            ], [
-                "createdAt" : "2015-02-24T22:30:54.442Z",
-                "firstName" : "Jason",
-                "lastName" : "Schatz",
-                "latitude" : 37.7617,
-                "longitude" : -122.4216,
-                "mapString" : "18th and Valencia, San Francisco, CA",
-                "mediaURL" : "http://en.wikipedia.org/wiki/Swift_%28programming_language%29",
-                "objectId" : "hiz0vOTmrL",
-                "uniqueKey" : 2362758535,
-                "updatedAt" : "2015-03-10T17:20:31.828Z"
-            ], [
-                "createdAt" : "2015-03-11T02:48:18.321Z",
-                "firstName" : "Jarrod",
-                "lastName" : "Parkes",
-                "latitude" : 34.73037,
-                "longitude" : -86.58611000000001,
-                "mapString" : "Huntsville, Alabama",
-                "mediaURL" : "https://linkedin.com/in/jarrodparkes",
-                "objectId" : "CDHfAy8sdp",
-                "uniqueKey" : 996618664,
-                "updatedAt" : "2015-03-13T03:37:58.389Z"
-            ]
-        ]
-    }
 }

@@ -12,7 +12,20 @@ import FBSDKLoginKit
 
 class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
     
+    var loadingView = UIView()
+    var activityIndicator = UIActivityIndicatorView()
+    
+    // MARK: - UI Lifecycle
     override func viewDidLoad() {
+        
+        loadingView.frame = CGRectMake(0.0, 0.0, view.bounds.width, view.bounds.height)
+        loadingView.center = view.center
+        loadingView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5)
+        loadingView.clipsToBounds = true
+        
+        activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0)
+        activityIndicator.activityIndicatorViewStyle = .WhiteLarge
+        activityIndicator.center = loadingView.center
         
         /* Create and set the left navigation bar buttons */
         // Check if FB Access token exists, then create corresponding bar button
@@ -28,9 +41,13 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
         let refreshButton = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "refreshDataSet")
         let pinButton = UIBarButtonItem(image: UIImage(named: "pin"), style: .Plain, target: self, action: "presentPostingView")
         navigationItem.rightBarButtonItems = [refreshButton, pinButton]
+    }
     
-        // GET Student Locations
-        refreshDataSet()
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+//        // GET Student Locations
+//        refreshDataSet()
     }
     
     // MARK: - Bar Button Actions
@@ -48,10 +65,25 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
 
     func refreshDataSet() {
         
+        loadingView.addSubview(activityIndicator)
+        view.addSubview(loadingView)
+        
+        activityIndicator.startAnimating()
+        
         // GET Student Locations
-        ParseClient.sharedInstance().getStudentLocations() { (success, errorString) in
+        ParseClient.sharedInstance().getStudentLocations() { (data, success, errorString) in
             if success {
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.activityIndicator.stopAnimating()
+                    self.loadingView.removeFromSuperview()
+                    
+                    ParseClient.sharedInstance().students = data!
+                }
+                
                 print("Student Locations data downloaded successfully")
+                print("tab bar controller: \(ParseClient.sharedInstance().students)")
+
             } else {
                 
                 let alertController = UIAlertController(title: "", message: errorString, preferredStyle: UIAlertControllerStyle.Alert)
@@ -63,6 +95,8 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
                 }
             }
         }
+        
+        
     }
     
     func presentPostingView() {

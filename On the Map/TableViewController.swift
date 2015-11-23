@@ -10,6 +10,7 @@ import UIKit
 
 class TableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    // MARK: - UI Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
     }

@@ -13,7 +13,6 @@ import FBSDKLoginKit
 class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButtonDelegate {
     
     // MARK: - Properties
-    
     @IBOutlet weak var emailLoginTextField: UITextField!
     @IBOutlet weak var passwordLoginTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!

@@ -13,21 +13,24 @@ import UIKit
 extension ParseClient {
     
     // MARK: - GET Student Locations Data
-    func getStudentLocations(completionHandler: (success: Bool, errorString: String?) -> Void) {
+    func getStudentLocations(completionHandler: (data: [StudentInformation]?, success: Bool, errorString: String?) -> Void) {
         
         let request = ParseClient.configureURLRequestForGETStudentLocations()
         
         createDataTask(request) { (result, error) in
             
             if let error = error {
-                completionHandler(success: false, errorString: error.localizedDescription)
+                completionHandler(data: nil, success: false, errorString: error.localizedDescription)
             } else {
                 if let results = result.valueForKey(ParseClient.JSONResponseKeys.StudentResults) as? [[String : AnyObject]] {
-                    print(results)
-                    completionHandler(success: true, errorString: nil)
+                    
+                    let students = StudentInformation.studentsFromResults(results)
+//                    self.students = students
+                    
+                    completionHandler(data: students, success: true, errorString: nil)
                 } else {
                     print("Could not find \(ParseClient.JSONResponseKeys.StudentResults) in \(result)")
-                    completionHandler(success: false, errorString: "No results returned from server.")
+                    completionHandler(data: nil, success: false, errorString: "No results returned from server.")
                 }
             }
         }
