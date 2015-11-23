@@ -71,14 +71,12 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
         activityIndicator.startAnimating()
         
         // GET Student Locations
-        ParseClient.sharedInstance().getStudentLocations() { (data, success, errorString) in
+        ParseClient.sharedInstance().getStudentLocations() { (success, errorString) in
             if success {
                 
                 dispatch_async(dispatch_get_main_queue()) {
                     self.activityIndicator.stopAnimating()
                     self.loadingView.removeFromSuperview()
-                    
-                    ParseClient.sharedInstance().students = data!
                 }
                 
                 print("Student Locations data downloaded successfully")

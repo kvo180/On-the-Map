@@ -30,11 +30,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     // Get student locations
     func getStudentData() {
         
-        ParseClient.sharedInstance().getStudentLocations() { (data, success, errorString) in
+        ParseClient.sharedInstance().getStudentLocations() { (success, errorString) in
             if success {
                 
                 dispatch_async(dispatch_get_main_queue()) {
-                    self.locations = data!
+                    self.locations = ParseClient.sharedInstance().students
                     self.configureAnnotations()
                     print("Student Locations data downloaded successfully")
                 }
