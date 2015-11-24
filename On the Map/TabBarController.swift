@@ -75,6 +75,9 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
     
     func presentPostingView() {
         print("Posting view presented")
+        
+        let postingVC = self.storyboard?.instantiateViewControllerWithIdentifier("PostingViewController") as! PostingViewController
+        self.presentViewController(postingVC, animated: true, completion: nil)
     }
     
     // MARK: - Facebook Login Methods

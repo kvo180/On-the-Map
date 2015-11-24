@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9F2737421BF765C2000A1856 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2737411BF765C2000A1856 /* MapViewController.swift */; };
 		9F2737441BF77C37000A1856 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2737431BF77C37000A1856 /* TableViewController.swift */; };
+		9F8DDFFB1C04A34000A33A3D /* PostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8DDFFA1C04A34000A33A3D /* PostingViewController.swift */; };
 		9F9C628A1BEF6E1C0039DE46 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9C62891BEF6E1C0039DE46 /* AppDelegate.swift */; };
 		9F9C628C1BEF6E1C0039DE46 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9C628B1BEF6E1C0039DE46 /* LoginViewController.swift */; };
 		9F9C628F1BEF6E1C0039DE46 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F9C628D1BEF6E1C0039DE46 /* Main.storyboard */; };
@@ -51,6 +52,7 @@
 /* Begin PBXFileReference section */
 		9F2737411BF765C2000A1856 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		9F2737431BF77C37000A1856 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		9F8DDFFA1C04A34000A33A3D /* PostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostingViewController.swift; sourceTree = "<group>"; };
 		9F9C62861BEF6E1C0039DE46 /* On the Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On the Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F9C62891BEF6E1C0039DE46 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F9C628B1BEF6E1C0039DE46 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				9FA6AB9E1BF862E700D7D228 /* TabBarController.swift */,
 				9F2737411BF765C2000A1856 /* MapViewController.swift */,
 				9F2737431BF77C37000A1856 /* TableViewController.swift */,
+				9F8DDFFA1C04A34000A33A3D /* PostingViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 				9FA6AB9F1BF862E700D7D228 /* TabBarController.swift in Sources */,
 				9F2737421BF765C2000A1856 /* MapViewController.swift in Sources */,
 				9FD30D301BF564030034CB14 /* UdacityClient.swift in Sources */,
+				9F8DDFFB1C04A34000A33A3D /* PostingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
