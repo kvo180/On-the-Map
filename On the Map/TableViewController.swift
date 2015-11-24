@@ -13,12 +13,18 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // MARK: - Properties
     var students: [StudentInformation] = [StudentInformation]()
     @IBOutlet weak var studentsTableView: UITableView!
+    var refreshControl = UIRefreshControl()
     var loadingView = UIView()
     var activityIndicator = UIActivityIndicatorView()
     
     // MARK: - UI Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Configure refresh control
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: "getStudentData", forControlEvents: UIControlEvents.ValueChanged)
+        studentsTableView.addSubview(refreshControl)
         
         // Configure overlay view and activity indicator
         loadingView.frame = CGRectMake(0.0, 0.0, view.bounds.width, view.bounds.height)
@@ -31,13 +37,15 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         activityIndicator.center = loadingView.center
         
         students = ParseClient.sharedInstance().students
-        
     }
     
     // Get student locations
     func getStudentData() {
         
-        showLoadingOverlayView()
+        // If refresh control was used, don't show loading view
+        if !refreshControl.refreshing {
+            showLoadingOverlayView()
+        }
         
         ParseClient.sharedInstance().getStudentLocations() { (success, errorString) in
             if success {
@@ -50,6 +58,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     self.students = ParseClient.sharedInstance().students
                     self.studentsTableView.reloadData()
                     self.dismissLoadingOverlayView()
+                    self.refreshControl.endRefreshing()
                     print("Student Locations data downloaded successfully")
                 }
                 
@@ -61,6 +70,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 
                 dispatch_async(dispatch_get_main_queue()) {
                     self.dismissLoadingOverlayView()
+                    self.refreshControl.endRefreshing()
                     self.presentViewController(alertController, animated: true, completion: nil)
                 }
             }
