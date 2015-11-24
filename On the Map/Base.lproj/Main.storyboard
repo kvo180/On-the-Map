@@ -199,7 +199,7 @@
         <!--Map Controller-->
         <scene sceneID="cbb-jH-pEW">
             <objects>
-                <viewController id="szg-HX-Lwk" userLabel="Map Controller" customClass="MapViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MapViewController" id="szg-HX-Lwk" userLabel="Map Controller" customClass="MapViewController" customModule="On_the_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="E59-98-ShO"/>
                         <viewControllerLayoutGuide type="bottom" id="Wos-0n-ZG5"/>
@@ -212,7 +212,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <animations/>
                                 <connections>
-                                    <outlet property="delegate" destination="szg-HX-Lwk" id="8WR-dl-zLt"/>
+                                    <outlet property="delegate" destination="szg-HX-Lwk" id="ugr-4S-JKd"/>
                                 </connections>
                             </mapView>
                         </subviews>
@@ -227,7 +227,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="map" selectedImage="map" id="cyy-OL-0M7"/>
                     <connections>
-                        <outlet property="mapView" destination="9iI-4r-YA9" id="koy-kk-XF4"/>
+                        <outlet property="mapView" destination="9iI-4r-YA9" id="0vP-8N-Y7g"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zaY-HS-2Me" userLabel="First Responder" sceneMemberID="firstResponder"/>

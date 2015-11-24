@@ -13,6 +13,12 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // MARK: - UI Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("table view did load")
+    }
+    
+    func getStudentData() {
+        print("table view refresh button pressed")
     }
     
     // MARK: - UITableViewDelegate and UITableViewDataSource Methods

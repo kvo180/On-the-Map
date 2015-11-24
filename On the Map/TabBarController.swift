@@ -12,23 +12,16 @@ import FBSDKLoginKit
 
 class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
     
+    // MARK: - Properties
     var loadingView = UIView()
     var activityIndicator = UIActivityIndicatorView()
     
     // MARK: - UI Lifecycle
     override func viewDidLoad() {
+        super.viewDidLoad()
         
-        loadingView.frame = CGRectMake(0.0, 0.0, view.bounds.width, view.bounds.height)
-        loadingView.center = view.center
-        loadingView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5)
-        loadingView.clipsToBounds = true
-        
-        activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0)
-        activityIndicator.activityIndicatorViewStyle = .WhiteLarge
-        activityIndicator.center = loadingView.center
-        
-        /* Create and set the left navigation bar buttons */
-        // Check if FB Access token exists, then create corresponding bar button
+        /* Create and set the navigation bar buttons */
+        // Check if FB Access token exists, then create corresponding 'Logout' bar button
         if FBSDKAccessToken.currentAccessToken() != nil {
             let fbButtonRect = CGRectMake(0.0, 0.0, 84.0, 30.0)
             let fbButton = FBSDKLoginButton(frame: fbButtonRect)
@@ -38,16 +31,18 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .Plain, target: self, action: "logoutButtonTouchUp")
         }
         
+        // Create 'Add Pin' and 'Refresh' bar buttons
         let refreshButton = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "refreshDataSet")
         let pinButton = UIBarButtonItem(image: UIImage(named: "pin"), style: .Plain, target: self, action: "presentPostingView")
+        tabBarController?.navigationItem.rightBarButtonItems = [refreshButton, pinButton]
         navigationItem.rightBarButtonItems = [refreshButton, pinButton]
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-//        // GET Student Locations
-//        refreshDataSet()
+        // GET Student Locations
+        refreshDataSet()
     }
     
     // MARK: - Bar Button Actions
@@ -65,35 +60,16 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
 
     func refreshDataSet() {
         
-        loadingView.addSubview(activityIndicator)
-        view.addSubview(loadingView)
-        
-        activityIndicator.startAnimating()
-        
-        // GET Student Locations
-        ParseClient.sharedInstance().getStudentLocations() { (success, errorString) in
-            if success {
-                
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.activityIndicator.stopAnimating()
-                    self.loadingView.removeFromSuperview()
-                }
-                
-                print("Student Locations data downloaded successfully")
-                print("tab bar controller: \(ParseClient.sharedInstance().students)")
-
-            } else {
-                
-                let alertController = UIAlertController(title: "", message: errorString, preferredStyle: UIAlertControllerStyle.Alert)
-                let okAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
-                alertController.addAction(okAction)
-                
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.presentViewController(alertController, animated: true, completion: nil)
-                }
-            }
+        if self.selectedViewController == self.viewControllers![0] {
+            
+            let mapVC = self.selectedViewController as! MapViewController
+            mapVC.getStudentData()
+            
+        } else {
+            print("tableVC")
+//            let tableVC = self.selectedViewController as! TableViewController
+            
         }
-        
         
     }
     
@@ -128,4 +104,5 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
             self.dismissViewControllerAnimated(true, completion: nil)
         }
     }
+    
 }

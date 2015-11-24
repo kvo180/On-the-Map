@@ -11,7 +11,10 @@ import MapKit
 
 class MapViewController: UIViewController, MKMapViewDelegate {
     
+    // MARK: - Properties
     var locations: [StudentInformation] = [StudentInformation]()
+    var loadingView = UIView()
+    var activityIndicator = UIActivityIndicatorView()
     
     // MARK: - Properties
     @IBOutlet weak var mapView: MKMapView!
@@ -19,40 +22,70 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     // MARK: - UI Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Set map view delegate
         mapView.delegate = self
+        
+        // Configure overlay view and activity indicator
+        loadingView.frame = CGRectMake(0.0, 0.0, view.bounds.width, view.bounds.height)
+        loadingView.center = view.center
+        loadingView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5)
+        loadingView.clipsToBounds = true
+        
+        activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0)
+        activityIndicator.activityIndicatorViewStyle = .WhiteLarge
+        activityIndicator.center = loadingView.center
+    
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        getStudentData()
-    }
+    // MARK: - Utilities
     
     // Get student locations
     func getStudentData() {
         
+        showLoadingOverlayView()
+        
         ParseClient.sharedInstance().getStudentLocations() { (success, errorString) in
             if success {
                 
-                dispatch_async(dispatch_get_main_queue()) {
+                let delay = 2.0 * Double(NSEC_PER_SEC)
+                let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+                
+                dispatch_after(time, dispatch_get_main_queue()) {
+                    
                     self.locations = ParseClient.sharedInstance().students
                     self.configureAnnotations()
+                    self.dismissLoadingOverlayView()
                     print("Student Locations data downloaded successfully")
                 }
                 
             } else {
                 
-                let alertController = UIAlertController(title: "", message: errorString, preferredStyle: UIAlertControllerStyle.Alert)
+                let alertController = UIAlertController(title: "", message: "\(errorString)\nPlease try again.", preferredStyle: UIAlertControllerStyle.Alert)
                 let okAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
                 alertController.addAction(okAction)
                 
                 dispatch_async(dispatch_get_main_queue()) {
+                    self.dismissLoadingOverlayView()
                     self.presentViewController(alertController, animated: true, completion: nil)
                 }
             }
         }
     }
     
+    func showLoadingOverlayView() {
+        loadingView.addSubview(activityIndicator)
+        view.addSubview(loadingView)
+        activityIndicator.startAnimating()
+    }
+    
+    func dismissLoadingOverlayView() {
+        activityIndicator.stopAnimating()
+        loadingView.removeFromSuperview()
+    }
+    
     func configureAnnotations() {
+        
         // Create annotations array
         var annotations = [MKPointAnnotation()]
         
