@@ -35,7 +35,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0)
         activityIndicator.activityIndicatorViewStyle = .WhiteLarge
         activityIndicator.center = loadingView.center
-    
     }
     
     // MARK: - Utilities
@@ -52,7 +51,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
                 
                 dispatch_after(time, dispatch_get_main_queue()) {
-                    
+
                     self.locations = ParseClient.sharedInstance().students
                     self.configureAnnotations()
                     self.dismissLoadingOverlayView()
@@ -86,6 +85,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     func configureAnnotations() {
         
+        // If previous annotations exist, remove from map
+        let oldAnnotations = mapView.annotations
+        if !oldAnnotations.isEmpty {
+            mapView.removeAnnotations(oldAnnotations)
+            print("Previous annotations removed")
+        }
+        
         // Create annotations array
         var annotations = [MKPointAnnotation()]
         
@@ -110,6 +116,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
         
         mapView.addAnnotations(annotations)
+        print("Annotations added")
     }
     
     // MARK: - MKMapViewDelegate Methods
