@@ -33,6 +33,7 @@ extension ParseClient {
         static let Limit = "limit"
         static let Skip = "skip"
         static let Order = "order"
+        static let UpdatedAtDescending = "-updatedAt"
     }
     
     // MARK: - JSON Response Keys
@@ -40,13 +41,13 @@ extension ParseClient {
         
         // MARK: Students
         static let StudentResults = "results"
-//        static let UpdatedAt = "updatedAt"
+        static let UpdatedAt = "updatedAt"
         static let Longitude = "longitude"
         static let Latitude = "latitude"
         static let ObjectID = "objectId"
         static let LastName = "lastName"
         static let FirstName = "firstName"
-//        static let CreatedAt = "createdAt"
+        static let CreatedAt = "createdAt"
         static let MediaURL = "mediaURL"
         static let UniqueKey = "uniqueKey"
         static let MapString = "mapString"

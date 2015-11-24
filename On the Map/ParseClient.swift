@@ -77,7 +77,10 @@ class ParseClient: NSObject {
     // MARK: - Configure URL Requests
     class func configureURLRequestForGETStudentLocations() -> NSMutableURLRequest {
         /* 1. Set the parameters */
-        let parameters: [String : AnyObject] = [ParameterKeys.Limit: 100]
+        let parameters: [String : AnyObject] = [
+            ParameterKeys.Limit: 100,
+            ParameterKeys.Order: ParameterKeys.UpdatedAtDescending
+        ]
         
         /* 2/3. Build the URL and configure the request */
         let urlString = Constants.baseURLSecure + UdacityClient.escapedParameters(parameters)

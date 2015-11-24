@@ -13,18 +13,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: - Properties
     var locations: [StudentInformation] = [StudentInformation]()
+    @IBOutlet weak var mapView: MKMapView!
     var loadingView = UIView()
     var activityIndicator = UIActivityIndicatorView()
-    
-    // MARK: - Properties
-    @IBOutlet weak var mapView: MKMapView!
 
     // MARK: - UI Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Set map view delegate
-        mapView.delegate = self
         
         // Configure overlay view and activity indicator
         loadingView.frame = CGRectMake(0.0, 0.0, view.bounds.width, view.bounds.height)
@@ -84,7 +79,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func configureAnnotations() {
-        
+
         // If previous annotations exist, remove from map
         let oldAnnotations = mapView.annotations
         if !oldAnnotations.isEmpty {
@@ -94,7 +89,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         // Create annotations array
         var annotations = [MKPointAnnotation()]
-        
+
         // Configure annotations
         for studentLocation in locations {
 
@@ -129,6 +124,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = true
+            
             pinView!.pinTintColor = UIColor.redColor()
             pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
         }

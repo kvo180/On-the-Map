@@ -66,9 +66,9 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
             mapVC.getStudentData()
             
         } else {
-            print("tableVC")
-//            let tableVC = self.selectedViewController as! TableViewController
-            
+
+            let tableVC = self.selectedViewController as! TableViewController
+            tableVC.getStudentData()
         }
         
     }

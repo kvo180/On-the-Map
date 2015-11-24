@@ -21,10 +21,13 @@ struct StudentInformation {
     var mediaURL = ""
     var uniqueKey = ""
     var objectID = ""
-//    var createdAt: NSDate?
-//    var updatedAt: NSDate?
+    var createdAt: NSDate!
+    var updatedAt: NSDate!
     
     init(dictionary: [String : AnyObject]) {
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-M-dd'T'HH:mm:ss.SSSZ"
         
         if let firstName = dictionary[ParseClient.JSONResponseKeys.FirstName] as? String {
             self.firstName = firstName
@@ -50,7 +53,12 @@ struct StudentInformation {
         if let objectID = dictionary[ParseClient.JSONResponseKeys.ObjectID] as? String {
             self.objectID = objectID
         }
-    
+        if let createdAt = dictionary[ParseClient.JSONResponseKeys.CreatedAt] as? String {
+            self.createdAt = dateFormatter.dateFromString(createdAt)
+        }
+        if let updatedAt = dictionary[ParseClient.JSONResponseKeys.UpdatedAt] as? String {
+            self.updatedAt = dateFormatter.dateFromString(updatedAt)
+        }
     }
     
     /* Helper: Given an array of dictionaries, convert them to an array of StudentInformation objects */
