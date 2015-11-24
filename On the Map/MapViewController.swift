@@ -139,15 +139,26 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         return pinView
     }
     
-    
     // Respond to taps - open URL in browser
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         
         if control == view.rightCalloutAccessoryView {
             
-            if let url = view.annotation?.subtitle! {
+            if let urlString = view.annotation?.subtitle! {
                 
-                UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+                let url = NSURL(string: urlString)
+                let app = UIApplication.sharedApplication()
+                
+                if app.openURL(url!) {
+                    print("URL opened successfully")
+                } else {
+                    print("URL cannot be opened")
+                    
+                    let alertController = UIAlertController(title: "", message: "Invalid URL", preferredStyle: UIAlertControllerStyle.Alert)
+                    let okAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
+                    alertController.addAction(okAction)
+                    presentViewController(alertController, animated: true, completion: nil)
+                }
             }
         }
     }
