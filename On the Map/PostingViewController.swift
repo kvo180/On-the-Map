@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import ContactsUI
 
 class PostingViewController: UIViewController, UITextViewDelegate {
     
@@ -70,20 +71,14 @@ class PostingViewController: UIViewController, UITextViewDelegate {
             geocoder.geocodeAddressString(locationTextView.text) { (placemarkArray, error) in
                 
                 if error == nil {
-
+                    
                     let userPlacemark = placemarkArray![0]
+                    
+                    // Get user string coordinates and store into properties
                     self.userLatitude = userPlacemark.location?.coordinate.latitude
                     self.userLongitude = userPlacemark.location?.coordinate.longitude
-                    print(self.userLatitude)
-                    print(self.userLongitude)
-                    
-                    // Hide postLocationContainerView
-                    self.postLocationContainerView.hidden = true
-                    
-                    // Configure and show postURLContainerView
-                    self.cancelButton.setTitleColor(self.lightGrayColor, forState: .Normal)
-                    
-                    self.postURLContainerView.hidden = false
+  
+                    self.showPostURLContainerView(userPlacemark)
                 }
                 
                 else {
@@ -121,6 +116,8 @@ class PostingViewController: UIViewController, UITextViewDelegate {
         if URLTextView.text != URLTextViewPlaceholderText {
             
             print("post submitted")
+            // ONLY dismiss VC if post is successful. If failed, display alert controller
+            self.dismissViewControllerAnimated(true, completion: nil)
         }
         
         else {
@@ -134,9 +131,51 @@ class PostingViewController: UIViewController, UITextViewDelegate {
     
     // MARK: - Utilities
     
+    func showPostURLContainerView(userPlacemark: CLPlacemark) {
+        
+        // Configure mapview region
+        let coordinate = userPlacemark.location!.coordinate
+        let circularRegion = userPlacemark.region as! CLCircularRegion
+        let metersAcross = circularRegion.radius * 2
+        let region = MKCoordinateRegionMakeWithDistance(coordinate, metersAcross, metersAcross)
+        
+        // Configure address string
+        let addressDictionary = userPlacemark.addressDictionary as! [String : AnyObject]
+        var addressLinesArray = addressDictionary["FormattedAddressLines"] as! [String]
+        let addressTitle = addressLinesArray.removeFirst()
+        let addressSubtitle = addressLinesArray.joinWithSeparator(", ")
+        
+        // Configure annotations array for userLocationMapView
+        var annotations = [MKPointAnnotation]()
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        annotation.title = addressTitle
+        annotation.subtitle = addressSubtitle
+        annotations.append(annotation)
+        
+        // Hide postLocationContainerView
+        postLocationContainerView.hidden = true
+        
+        // Configure and show postURLContainerView
+        cancelButton.setTitleColor(lightGrayColor, forState: .Normal)
+        postURLContainerView.hidden = false
+        userLocationMapView.showAnnotations(annotations, animated: true)
+        userLocationMapView.selectAnnotation(annotation, animated: true)
+        userLocationMapView.setRegion(region, animated: true)
+    }
+    
     // Close keyboard whenever user taps anywhere outside of keyboard:
     func dismissKeyboard() {
         view.endEditing(true)
+    }
+    
+    // Dismiss keyboard if Return key is pressed
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
     }
     
     // MARK: - TextView Delegate Methods
@@ -161,13 +200,5 @@ class PostingViewController: UIViewController, UITextViewDelegate {
             }
         }
     }
-    
-    // Dismiss keyboard if Return key is pressed
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n" {
-            textView.resignFirstResponder()
-            return false
-        }
-        return true
-    }
+
 }
