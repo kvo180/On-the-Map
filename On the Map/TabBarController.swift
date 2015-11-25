@@ -42,7 +42,8 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
         super.viewWillAppear(animated)
         
         // GET Student Locations
-        refreshDataSet()
+        let mapVC = selectedViewController as! MapViewController
+        mapVC.getStudentData()
     }
     
     // MARK: - Bar Button Actions
@@ -60,17 +61,11 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
 
     func refreshDataSet() {
         
-        if self.selectedViewController == self.viewControllers![0] {
-            
-            let mapVC = self.selectedViewController as! MapViewController
-            mapVC.getStudentData()
-            
-        } else {
-
-            let tableVC = self.selectedViewController as! TableViewController
-            tableVC.getStudentData()
-        }
+        let mapVC = self.viewControllers![0] as! MapViewController
+        mapVC.getStudentData()
         
+        let tableVC = self.viewControllers![1] as! TableViewController
+        tableVC.getStudentData()
     }
     
     func presentPostingView() {

@@ -55,7 +55,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 
             } else {
                 
-                let alertController = UIAlertController(title: "", message: "\(errorString)\nPlease try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                let alertController = UIAlertController(title: "", message: "\(errorString!)\nPlease try again.", preferredStyle: UIAlertControllerStyle.Alert)
                 let dismissAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
                 alertController.addAction(dismissAction)
                 

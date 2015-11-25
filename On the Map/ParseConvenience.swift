@@ -26,7 +26,7 @@ extension ParseClient {
                     
                     let students = StudentInformation.studentsFromResults(results)
                     self.students = students
-                    
+
                     completionHandler(success: true, errorString: nil)
                 } else {
                     print("Could not find \(ParseClient.JSONResponseKeys.StudentResults) in \(result)")
