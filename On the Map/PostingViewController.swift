@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class PostingViewController: UIViewController, UITextViewDelegate {
     
@@ -16,6 +17,8 @@ class PostingViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var locationTextView: UITextView!
     let locationTextViewPlaceholderText = "Enter your location..."
     let whitespaceSet = NSCharacterSet.whitespaceCharacterSet()
+    var userLatitude: Double!
+    var userLongitude: Double!
     
     // MARK: - UI Lifecycle
     override func viewDidLoad() {
@@ -42,14 +45,44 @@ class PostingViewController: UIViewController, UITextViewDelegate {
         
         if locationTextView.text != locationTextViewPlaceholderText {
             
-            print("findOnMapButton")
+            let geocoder = CLGeocoder()
+            geocoder.geocodeAddressString(locationTextView.text) { (placemarkArray, error) in
+                
+                if error == nil {
+
+                    let userPlacemark = placemarkArray![0]
+                    self.userLatitude = userPlacemark.location?.coordinate.latitude
+                    self.userLongitude = userPlacemark.location?.coordinate.longitude
+                    print(self.userLatitude)
+                    print(self.userLongitude)
+                }
+                
+                else {
+                    
+                    let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+                    let dismissAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
+                    alertController.addAction(dismissAction)
+                    
+                    if error!.domain == kCLErrorDomain && error!.code == 8 {
+                        
+                        alertController.message = "Location cannot be found."
+                        self.presentViewController(alertController, animated: true, completion: nil)
+                    }
+                    
+                    else {
+                        
+                        alertController.message = error!.localizedDescription
+                        self.presentViewController(alertController, animated: true, completion: nil)
+                    }
+                }
+            }
         }
             
         else {
             
             let alertController = UIAlertController(title: "", message: "Please enter a location.", preferredStyle: UIAlertControllerStyle.Alert)
-            let okAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
-            alertController.addAction(okAction)
+            let dismissAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
+            alertController.addAction(dismissAction)
             presentViewController(alertController, animated: true, completion: nil)
         }
     }

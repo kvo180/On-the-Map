@@ -46,8 +46,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
         
         // Configure alert controller and add action
         alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)
-        let okAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
-        alertController.addAction(okAction)
+        let dismissAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
+        alertController.addAction(dismissAction)
         
         // Check if FB access token exists. If true, implement login to Udacity
         if let accessToken = FBSDKAccessToken.currentAccessToken() {

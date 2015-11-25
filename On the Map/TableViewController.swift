@@ -65,8 +65,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
             } else {
                 
                 let alertController = UIAlertController(title: "", message: "\(errorString)\nPlease try again.", preferredStyle: UIAlertControllerStyle.Alert)
-                let okAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
-                alertController.addAction(okAction)
+                let dismissAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
+                alertController.addAction(dismissAction)
                 
                 dispatch_async(dispatch_get_main_queue()) {
                     self.dismissLoadingOverlayView()
@@ -133,8 +133,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 print("URL cannot be opened")
                 
                 let alertController = UIAlertController(title: "", message: "Invalid URL.", preferredStyle: UIAlertControllerStyle.Alert)
-                let okAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
-                alertController.addAction(okAction)
+                let dismissAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
+                alertController.addAction(dismissAction)
                 presentViewController(alertController, animated: true, completion: nil)
             }
             
