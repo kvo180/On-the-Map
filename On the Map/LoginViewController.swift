@@ -119,7 +119,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
     
     @IBAction func signUpButtonTouchUp(sender: AnyObject) {
         
-        let signUpPageURL = NSURL(string: "https://www.udacity.com/account/auth#!/signup")
+        let signUpPageURL = NSURL(string: UdacityClient.Constants.signUpURL)
         UIApplication.sharedApplication().openURL(signUpPageURL!)
         
     }

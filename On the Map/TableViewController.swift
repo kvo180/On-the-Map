@@ -110,10 +110,10 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
 //        let date = dateFormatter.stringFromDate(updateAt)
         
         cell.textLabel!.text = "\(first) \(last)"
-        cell.textLabel!.font = UIFont(name: "Roboto-Regular", size: 20.0)
+        cell.textLabel!.font = UIFont(name: "Roboto-Regular", size: 18.0)
         cell.detailTextLabel!.text = mediaURL
 //        cell.detailTextLabel!.text = "Updated \(date)"
-        cell.detailTextLabel!.font = UIFont(name: "Roboto-Thin", size: 15.0)
+        cell.detailTextLabel!.font = UIFont(name: "Roboto-Thin", size: 13.0)
         cell.imageView?.image = UIImage(named: "pin")
         cell.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
         
@@ -132,7 +132,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
             } else {
                 print("URL cannot be opened")
                 
-                let alertController = UIAlertController(title: "", message: "Invalid URL", preferredStyle: UIAlertControllerStyle.Alert)
+                let alertController = UIAlertController(title: "", message: "Invalid URL.", preferredStyle: UIAlertControllerStyle.Alert)
                 let okAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
                 alertController.addAction(okAction)
                 presentViewController(alertController, animated: true, completion: nil)
