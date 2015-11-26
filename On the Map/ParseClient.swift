@@ -21,6 +21,7 @@ class ParseClient: NSObject {
         session = NSURLSession.sharedSession()
     }
     
+    
     // MARK: - dataTaskWithRequest
     func createDataTask(request: NSMutableURLRequest, completionHandler: (result: AnyObject!, error: NSError?) -> Void) {
         
@@ -74,6 +75,7 @@ class ParseClient: NSObject {
         task.resume()
     }
     
+    
     // MARK: - Configure URL Requests
     class func configureURLRequestForGETStudentLocations() -> NSMutableURLRequest {
         /* 1. Set the parameters */
@@ -91,6 +93,25 @@ class ParseClient: NSObject {
         
         return request
     }
+    
+    class func configureURLRequestForPOSTStudentLocation() -> NSMutableURLRequest {
+        
+        /* 1. Set the parameters */
+        // No parameters to set...
+        
+        /* 2/3. Build the URL and configure the request */
+        let urlString = Constants.baseURLSecure
+        let url = NSURL(string: urlString)!
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        request.addValue(ParseClient.Constants.AppID, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(ParseClient.Constants.APIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.HTTPBody = "{\"uniqueKey\": \"\(User.uniqueKey)\", \"firstName\": \"\(User.firstName)\", \"lastName\": \"\(User.lastName)\",\"mapString\": \"\(User.mapString)\", \"mediaURL\": \"\(User.mediaURL)\",\"latitude\": \(User.latitude), \"longitude\": \(User.longitude)}".dataUsingEncoding(NSUTF8StringEncoding)
+        
+        return request
+    }
+    
     
     // MARK: Shared Instance
     class func sharedInstance() -> ParseClient {

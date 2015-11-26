@@ -17,6 +17,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     var loadingView = UIView()
     var activityIndicator = UIActivityIndicatorView()
 
+    
     // MARK: - UI Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +32,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         activityIndicator.activityIndicatorViewStyle = .WhiteLarge
         activityIndicator.center = loadingView.center
     }
+    
     
     // MARK: - Utilities
     
@@ -113,6 +115,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         mapView.addAnnotations(annotations)
         print("Annotations added")
     }
+    
     
     // MARK: - MKMapViewDelegate Methods
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {

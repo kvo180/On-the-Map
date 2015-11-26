@@ -12,16 +12,11 @@ import Foundation
 struct StudentInformation {
     
     // MARK: - Properties
-    
     var firstName = ""
     var lastName = ""
     var longitude = 0.0
     var latitude = 0.0
-    var mapString = ""
     var mediaURL = ""
-    var uniqueKey = ""
-    var objectID = ""
-    var createdAt: NSDate!
     var updatedAt: NSDate!
     
     init(dictionary: [String : AnyObject]) {
@@ -41,26 +36,16 @@ struct StudentInformation {
         if let latitude = dictionary[ParseClient.JSONResponseKeys.Latitude] as? Double {
             self.latitude = latitude
         }
-        if let mapString = dictionary[ParseClient.JSONResponseKeys.MapString] as? String {
-            self.mapString = mapString
-        }
         if let mediaURL = dictionary[ParseClient.JSONResponseKeys.MediaURL] as? String {
             self.mediaURL = mediaURL
-        }
-        if let uniqueKey = dictionary[ParseClient.JSONResponseKeys.UniqueKey] as? String {
-            self.uniqueKey = uniqueKey
-        }
-        if let objectID = dictionary[ParseClient.JSONResponseKeys.ObjectID] as? String {
-            self.objectID = objectID
-        }
-        if let createdAt = dictionary[ParseClient.JSONResponseKeys.CreatedAt] as? String {
-            self.createdAt = dateFormatter.dateFromString(createdAt)
         }
         if let updatedAt = dictionary[ParseClient.JSONResponseKeys.UpdatedAt] as? String {
             self.updatedAt = dateFormatter.dateFromString(updatedAt)
         }
     }
     
+    
+    // MARK: - Helper
     /* Helper: Given an array of dictionaries, convert them to an array of StudentInformation objects */
     static func studentsFromResults(results: [[String : AnyObject]]) -> [StudentInformation] {
         

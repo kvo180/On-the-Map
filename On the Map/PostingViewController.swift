@@ -32,8 +32,7 @@ class PostingViewController: UIViewController, UITextViewDelegate {
     let whitespaceSet = NSCharacterSet.whitespaceCharacterSet()
     let darkBlueColor = UIColor(red: 30/255, green: 65/255, blue: 139/255, alpha: 1.0)
     let lightGrayColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1.0)
-    var userLatitude: Double!
-    var userLongitude: Double!
+    
     
     // MARK: - UI Lifecycle
     override func viewDidLoad() {
@@ -65,16 +64,16 @@ class PostingViewController: UIViewController, UITextViewDelegate {
         view.addGestureRecognizer(tap)
     }
     
+    
     // MARK: - IBActions
-    @IBAction func cancelButtonTouchUp(sender: AnyObject) {
-        dismissKeyboard()
-        dismissViewControllerAnimated(true, completion: nil)
-    }
     
     // Forward geocode user location and show post URL view
     @IBAction func findOnMapButtonTouchUp(sender: AnyObject) {
         
         if locationTextView.text != locationTextViewPlaceholderText {
+            
+            // Get user mapString and store into property
+            User.mapString = locationTextView.text!
             
             let geocoder = CLGeocoder()
             geocoder.geocodeAddressString(locationTextView.text) { (placemarkArray, error) in
@@ -84,9 +83,9 @@ class PostingViewController: UIViewController, UITextViewDelegate {
                     let userPlacemark = placemarkArray![0]
                     
                     // Get user string coordinates and store into properties
-                    self.userLatitude = userPlacemark.location?.coordinate.latitude
-                    self.userLongitude = userPlacemark.location?.coordinate.longitude
-  
+                    User.latitude = (userPlacemark.location?.coordinate.latitude)!
+                    User.longitude = (userPlacemark.location?.coordinate.longitude)!
+
                     self.showPostURLContainerView(userPlacemark)
                 }
                 
@@ -149,9 +148,29 @@ class PostingViewController: UIViewController, UITextViewDelegate {
         
         if URLTextView.text != URLTextViewPlaceholderText {
             
-            print("post submitted")
-            // ONLY dismiss VC if post is successful. If failed, display alert controller
-            self.dismissViewControllerAnimated(true, completion: nil)
+            // Get user mediaURL and store into property
+            User.mediaURL = URLTextView.text!
+            
+            ParseClient.sharedInstance().postStudentLocation() { (success, errorString) in
+                if success {
+                    
+                    print("Student location successfully posted.")
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    }
+                }
+                
+                else {
+                    
+                    let alertController = UIAlertController(title: "", message: "\(errorString!)\nPlease try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                    let dismissAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
+                    alertController.addAction(dismissAction)
+                    
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.presentViewController(alertController, animated: true, completion: nil)
+                    }
+                }
+            }
         }
         
         else {
@@ -162,6 +181,12 @@ class PostingViewController: UIViewController, UITextViewDelegate {
             presentViewController(alertController, animated: true, completion: nil)
         }
     }
+    
+    @IBAction func cancelButtonTouchUp(sender: AnyObject) {
+        dismissKeyboard()
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     
     // MARK: - Utilities
     
@@ -228,6 +253,7 @@ class PostingViewController: UIViewController, UITextViewDelegate {
         }
         return true
     }
+    
     
     // MARK: - TextView Delegate Methods
     func textViewDidBeginEditing(textView: UITextView) {

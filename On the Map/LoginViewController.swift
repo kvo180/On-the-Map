@@ -21,6 +21,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
     let whitespaceSet = NSCharacterSet.whitespaceCharacterSet()
     var alertController: UIAlertController!
     
+    
     // MARK: - UI Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,6 +75,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
         }
     }
     
+    
     // MARK: - IBActions
     
     @IBAction func loginButtonTouchUp(sender: AnyObject) {
@@ -123,6 +125,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
         UIApplication.sharedApplication().openURL(signUpPageURL!)
         
     }
+    
     
     // MARK: - Utilities
     
@@ -185,6 +188,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
         // This method is not needed in this view controller
     }
+    
     
     // MARK: - UITextField Delegate Methods
     func textFieldShouldReturn(textField: UITextField) -> Bool {

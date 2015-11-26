@@ -17,6 +17,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var loadingView = UIView()
     var activityIndicator = UIActivityIndicatorView()
     
+    
     // MARK: - UI Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,6 +88,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         activityIndicator.stopAnimating()
         loadingView.removeFromSuperview()
     }
+    
     
     // MARK: - UITableViewDelegate and UITableViewDataSource Methods
     

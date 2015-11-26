@@ -40,6 +40,7 @@ extension UdacityClient {
         }
     }
     
+    
     // MARK: - loginWithFacebook
     func loginWithFacebook(accessToken: String, completionHandler: (success: Bool, errorString: String?) -> Void) {
         
@@ -67,6 +68,7 @@ extension UdacityClient {
         }
     }
     
+    
     // MARK: - Get Public User Data
     func getPublicUserData() {
         
@@ -77,11 +79,14 @@ extension UdacityClient {
                 print(error)
             } else {
                 if let user = result.valueForKey("user") as? NSDictionary {
-                    print(user)
+                    User.lastName = user["last_name"] as! String
+                    User.firstName = user["first_name"] as! String
+                    User.uniqueKey = user["key"] as! String
                 }
             }
         }
     }
+    
     
     // MARK: - Logout of Session
     func logoutSession(completionHandler: (success: Bool, errorString: String?) -> Void) {

@@ -16,6 +16,7 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
     var loadingView = UIView()
     var activityIndicator = UIActivityIndicatorView()
     
+    
     // MARK: - UI Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +37,9 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
         let pinButton = UIBarButtonItem(image: UIImage(named: "pin"), style: .Plain, target: self, action: "presentPostingView")
         tabBarController?.navigationItem.rightBarButtonItems = [refreshButton, pinButton]
         navigationItem.rightBarButtonItems = [refreshButton, pinButton]
+        
+        // Get user data
+        UdacityClient.sharedInstance().getPublicUserData()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -46,9 +50,10 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
         mapVC.getStudentData()
     }
     
+    
     // MARK: - Bar Button Actions
     func logoutButtonTouchUp() {
-        let confirmLogoutController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let confirmLogoutController = UIAlertController(title: "", message: "Logged in as \(User.firstName) \(User.lastName)", preferredStyle: UIAlertControllerStyle.ActionSheet)
         let logoutAction = UIAlertAction(title: "Log Out", style: .Destructive) { action in
             self.deleteCurrentSession()
         }
@@ -75,6 +80,7 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
         self.presentViewController(postingVC, animated: true, completion: nil)
     }
     
+    
     // MARK: - Facebook Login Methods
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         // This method is not needed in this view controller
@@ -84,6 +90,7 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
         print("Facebook logged out")
         deleteCurrentSession()
     }
+    
     
     // MARK: - Utilities
     func deleteCurrentSession() {

@@ -22,6 +22,7 @@ class UdacityClient: NSObject {
         session = NSURLSession.sharedSession()
     }
     
+    
     // MARK: - dataTaskWithRequest
     func createDataTask(request: NSMutableURLRequest, completionHandler: (result: AnyObject!, error: NSError?) -> Void) {
         
@@ -80,6 +81,7 @@ class UdacityClient: NSObject {
         /* 7. Start the request */
         task.resume()
     }
+    
     
     // MARK: - Configure URL Requests
     class func configureURLRequestForPOSTSession(userName: String, password: String) -> NSMutableURLRequest {
@@ -187,6 +189,7 @@ class UdacityClient: NSObject {
         
         return (!urlVars.isEmpty ? "?" : "") + urlVars.joinWithSeparator("&")
     }
+    
     
     // MARK: Shared Instance
     class func sharedInstance() -> UdacityClient {
