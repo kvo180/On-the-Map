@@ -21,9 +21,11 @@ class PostingViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var postURLContainerView: UIView!
     @IBOutlet weak var URLTextView: UITextView!
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var userLocationMapView: MKMapView!
     @IBOutlet weak var submitButton: UIButton!
     
+    var defaultRegion: MKCoordinateRegion!
     let locationTextViewPlaceholderText = "Enter your location..."
     let URLTextViewPlaceholderText = "Enter a link to share..."
     let URLTextViewProtocolText = "https://"
@@ -39,7 +41,9 @@ class PostingViewController: UIViewController, UITextViewDelegate {
         
         // Configure container views
         postLocationContainerView.hidden = false
+        postLocationContainerView.alpha = 1
         postURLContainerView.hidden = true
+        postURLContainerView.alpha = 0
         
         // Configure textviews
         locationTextView.delegate = self
@@ -47,6 +51,9 @@ class PostingViewController: UIViewController, UITextViewDelegate {
         URLTextView.delegate = self
         let topInset = (URLTextView.bounds.height - 20.0) / 2
         URLTextView.textContainerInset = UIEdgeInsetsMake(topInset, 5.0, 10.0, 5.0)
+        
+        // Get mapview default region
+        defaultRegion = userLocationMapView.region
         
         // Configure buttons
         findOnMapButton.layer.cornerRadius = 10.0
@@ -60,9 +67,11 @@ class PostingViewController: UIViewController, UITextViewDelegate {
     
     // MARK: - IBActions
     @IBAction func cancelButtonTouchUp(sender: AnyObject) {
+        dismissKeyboard()
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    // Forward geocode user location and show post URL view
     @IBAction func findOnMapButtonTouchUp(sender: AnyObject) {
         
         if locationTextView.text != locationTextViewPlaceholderText {
@@ -111,6 +120,31 @@ class PostingViewController: UIViewController, UITextViewDelegate {
         }
     }
     
+    // Go back to post location view
+    @IBAction func backButtonTouchUp(sender: AnyObject) {
+        
+        dismissKeyboard()
+        
+        // postURLContainerView transition animation
+        UIView.animateWithDuration(0.4, animations: {
+            self.postURLContainerView.alpha = 0
+        })
+        
+        // Configure and show postLocationContainerView
+        cancelButton.setTitleColor(darkBlueColor, forState: .Normal)
+        postLocationContainerView.hidden = false
+        postLocationContainerView.alpha = 1
+        
+        // Hide postURLContainerView with delay so animation is visible
+        let delay = 0.4 * Double(NSEC_PER_SEC)
+        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        
+        dispatch_after(time, dispatch_get_main_queue()) {
+            self.postURLContainerView.hidden = true
+        }
+    }
+    
+    // Submit user location post
     @IBAction func submitButtonTouchUp(sender: AnyObject) {
         
         if URLTextView.text != URLTextViewPlaceholderText {
@@ -133,6 +167,13 @@ class PostingViewController: UIViewController, UITextViewDelegate {
     
     func showPostURLContainerView(userPlacemark: CLPlacemark) {
         
+        // Reset mapview
+        userLocationMapView.setRegion(defaultRegion, animated: false)
+        let previousAnnotations = userLocationMapView.annotations
+        if !previousAnnotations.isEmpty {
+            userLocationMapView.removeAnnotations(previousAnnotations)
+        }
+        
         // Configure mapview region
         let coordinate = userPlacemark.location!.coordinate
         let circularRegion = userPlacemark.region as! CLCircularRegion
@@ -152,16 +193,26 @@ class PostingViewController: UIViewController, UITextViewDelegate {
         annotation.title = addressTitle
         annotation.subtitle = addressSubtitle
         annotations.append(annotation)
-        
-        // Hide postLocationContainerView
-        postLocationContainerView.hidden = true
-        
+
         // Configure and show postURLContainerView
         cancelButton.setTitleColor(lightGrayColor, forState: .Normal)
         postURLContainerView.hidden = false
+        UIView.animateWithDuration(0.5, animations: {
+            self.postURLContainerView.alpha = 1
+        })
         userLocationMapView.showAnnotations(annotations, animated: true)
         userLocationMapView.selectAnnotation(annotation, animated: true)
         userLocationMapView.setRegion(region, animated: true)
+        
+        // Hide postLocationContainerView with delay so animation is visible
+        let delay = 0.5 * Double(NSEC_PER_SEC)
+        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        
+        dispatch_after(time, dispatch_get_main_queue()) {
+            
+            self.postLocationContainerView.hidden = true
+            self.postLocationContainerView.alpha = 0
+        }
     }
     
     // Close keyboard whenever user taps anywhere outside of keyboard:

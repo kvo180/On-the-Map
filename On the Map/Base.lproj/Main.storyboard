@@ -17,6 +17,7 @@
             <string>Roboto-Regular</string>
             <string>Roboto-Regular</string>
             <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -292,6 +293,21 @@
                                             <action selector="submitButtonTouchUp:" destination="gbM-Mf-N7d" eventType="touchUpInside" id="KAp-0A-qQ9"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zye-H6-DUD">
+                                        <rect key="frame" x="8" y="20" width="36" height="31"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="36" id="L2T-XU-jD5"/>
+                                            <constraint firstAttribute="height" constant="31" id="bBp-JA-FSn"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
+                                        <state key="normal" title="Back">
+                                            <color key="titleColor" red="0.96464646470000004" green="0.96464646470000004" blue="0.96464646470000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="backButtonTouchUp:" destination="gbM-Mf-N7d" eventType="touchUpInside" id="8za-nk-Oyu"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" red="0.87373737370000004" green="0.87373737370000004" blue="0.87373737370000004" alpha="1" colorSpace="calibratedRGB"/>
@@ -302,6 +318,8 @@
                                     <constraint firstItem="YNt-YU-ZC1" firstAttribute="leading" secondItem="rMR-OU-IgM" secondAttribute="leading" id="Acu-B7-s57"/>
                                     <constraint firstAttribute="bottom" secondItem="P0P-eJ-n69" secondAttribute="bottom" constant="50" id="SCH-jM-BeN"/>
                                     <constraint firstAttribute="bottom" secondItem="YNt-YU-ZC1" secondAttribute="bottom" id="ZJd-eV-1WD"/>
+                                    <constraint firstItem="Zye-H6-DUD" firstAttribute="leading" secondItem="rMR-OU-IgM" secondAttribute="leading" constant="8" id="k7E-5Y-y6B"/>
+                                    <constraint firstItem="Zye-H6-DUD" firstAttribute="top" secondItem="rMR-OU-IgM" secondAttribute="top" constant="20" id="nLY-5L-bL9"/>
                                     <constraint firstAttribute="trailing" secondItem="jFd-KP-7ke" secondAttribute="trailing" id="wiu-1T-YW4"/>
                                     <constraint firstItem="YNt-YU-ZC1" firstAttribute="top" secondItem="jFd-KP-7ke" secondAttribute="bottom" constant="8" id="xp7-vA-zCS"/>
                                     <constraint firstItem="jFd-KP-7ke" firstAttribute="top" secondItem="rMR-OU-IgM" secondAttribute="top" id="yIc-bi-eGD"/>
@@ -352,6 +370,7 @@
                     </view>
                     <connections>
                         <outlet property="URLTextView" destination="jFd-KP-7ke" id="WRs-dq-ra7"/>
+                        <outlet property="backButton" destination="Zye-H6-DUD" id="FVP-1W-5sE"/>
                         <outlet property="cancelButton" destination="Pg0-sL-uDF" id="W94-ab-aRD"/>
                         <outlet property="findOnMapButton" destination="YG3-D6-2ms" id="zDb-16-hE5"/>
                         <outlet property="locationTextView" destination="1PT-ZQ-nPc" id="k0k-gN-UcB"/>

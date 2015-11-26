@@ -81,9 +81,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func configureAnnotations() {
 
         // If previous annotations exist, remove from map
-        let oldAnnotations = mapView.annotations
-        if !oldAnnotations.isEmpty {
-            mapView.removeAnnotations(oldAnnotations)
+        let previousAnnotations = mapView.annotations
+        if !previousAnnotations.isEmpty {
+            mapView.removeAnnotations(previousAnnotations)
             print("Previous annotations removed")
         }
         
