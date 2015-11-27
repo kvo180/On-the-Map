@@ -14,7 +14,6 @@ class UdacityClient: NSObject {
     
     // MARK: - Properties
     var session: NSURLSession!
-    var userKey: String? = nil
     
     // MARK: - Initializers
     override init() {
@@ -45,7 +44,7 @@ class UdacityClient: NSObject {
                     
                     // Set error message if login credentials are invalid
                     if response.statusCode == 403 {
-                        let userInfo = [NSLocalizedDescriptionKey : "Email/Password is invalid."]
+                        let userInfo = [NSLocalizedDescriptionKey : "Email/Password is invalid"]
                         completionHandler(result: nil, error: NSError(domain: "statusCode", code: 2, userInfo: userInfo))
                     } else {
                         let userInfo = [NSLocalizedDescriptionKey : "\(response.statusCode) - \(localizedResponse)"]
@@ -54,12 +53,12 @@ class UdacityClient: NSObject {
                     
                 } else if let response = response {
                     print("Your request returned an invalid response! Response: \(response)")
-                    let userInfo = [NSLocalizedDescriptionKey : "The request returned an invalid response code."]
+                    let userInfo = [NSLocalizedDescriptionKey : "The request returned an invalid response code"]
                     completionHandler(result: nil, error: NSError(domain: "statusCode", code: 2, userInfo: userInfo))
                     
                 } else {
                     print("Your request returned an invalid response!")
-                    let userInfo = [NSLocalizedDescriptionKey : "The request returned an invalid response code."]
+                    let userInfo = [NSLocalizedDescriptionKey : "The request returned an invalid response code"]
                     completionHandler(result: nil, error: NSError(domain: "statusCode", code: 3, userInfo: userInfo))
                 }
                 return
@@ -68,7 +67,7 @@ class UdacityClient: NSObject {
             /* GUARD: Was there any data returned? */
             guard let data = data else {
                 print("No data was returned by the request!")
-                let userInfo = [NSLocalizedDescriptionKey : "Unable to retrieve data from server."]
+                let userInfo = [NSLocalizedDescriptionKey : "Unable to retrieve data from server"]
                 completionHandler(result: nil, error: NSError(domain: "data", code: 4, userInfo: userInfo))
                 return
             }
@@ -149,7 +148,7 @@ class UdacityClient: NSObject {
         // No parameters to set...
         
         /* 2/3. Build the URL and configure the request */
-        let urlString = Constants.baseURLSecure + UdacityClient.Methods.UserAccount + "/" + UdacityClient.sharedInstance().userKey!
+        let urlString = Constants.baseURLSecure + UdacityClient.Methods.UserAccount + "/" + User.uniqueKey
         let url = NSURL(string: urlString)!
         let request = NSMutableURLRequest(URL: url)
         

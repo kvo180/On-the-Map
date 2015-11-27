@@ -19,7 +19,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
     @IBOutlet weak var facebookLoginButton: FBSDKLoginButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     let whitespaceSet = NSCharacterSet.whitespaceCharacterSet()
-    var alertController: UIAlertController!
     
     
     // MARK: - UI Lifecycle
@@ -45,31 +44,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
         
-        // Configure alert controller and add action
-        alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)
-        let dismissAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
-        alertController.addAction(dismissAction)
-        
         // Check if FB access token exists. If true, implement login to Udacity
         if let accessToken = FBSDKAccessToken.currentAccessToken() {
             
             startActivityIndicator()
+            loginWithFB(accessToken)
             
-            UdacityClient.sharedInstance().loginWithFacebook(accessToken.tokenString) { (success, errorString) in
-                if success {
-                    print("Login with Facebook successful")
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self.completeLogin()
-                        self.stopActivityIndicator()
-                    }
-                } else {
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self.alertController.message = errorString
-                        self.presentViewController(self.alertController, animated: true, completion: nil)
-                        self.stopActivityIndicator()
-                    }
-                }
-            }
         } else {
             print("Facebook not logged in...")
         }
@@ -98,9 +78,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
                         self.passwordLoginTextField.text = nil
                         }
                 } else {
+                    self.showAlertController("\(errorString!).\nPlease try again.")
                     dispatch_async(dispatch_get_main_queue()) {
-                        self.alertController.message = errorString
-                        self.presentViewController(self.alertController, animated: true, completion: nil)
                         self.stopActivityIndicator()
                         self.loginButton.enabled = true
                     }
@@ -108,14 +87,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
             }
         } else {
             if emailLoginTextField.text!.stringByTrimmingCharactersInSet(whitespaceSet) == "" && passwordLoginTextField.text!.stringByTrimmingCharactersInSet(whitespaceSet) == "" {
-                alertController.message = "Please enter your login information."
+                showAlertController("Please enter your login information.")
             } else if emailLoginTextField.text!.stringByTrimmingCharactersInSet(whitespaceSet) == "" {
-                alertController.message = "Please enter your email."
+                showAlertController("Please enter your email.")
             } else {
-                alertController.message = "Please enter your password."
+                showAlertController("Please enter your password.")
             }
-            
-            presentViewController(alertController, animated: true, completion: nil)
         }
     }
     
@@ -128,6 +105,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
     
     
     // MARK: - Utilities
+    
+    func showAlertController(message: String) {
+        
+        let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.message = message
+        let dismissAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
+        alertController.addAction(dismissAction)
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
     
     // Close keyboard whenever user taps anywhere outside of keyboard:
     func dismissKeyboard() {
@@ -157,8 +146,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
         
         if error != nil {
             print(error.localizedDescription)
-            alertController.message = error.localizedDescription
-            presentViewController(self.alertController, animated: true, completion: nil)
+            showAlertController(error.localizedDescription)
             stopActivityIndicator()
             return
         } else if result.isCancelled {
@@ -166,27 +154,32 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
             stopActivityIndicator()
         } else {
             if let accessToken = result.token {
-                UdacityClient.sharedInstance().loginWithFacebook(accessToken.tokenString) { (success, errorString) in
-                    if success {
-                        print("Login with Facebook successful")
-                        dispatch_async(dispatch_get_main_queue()) {
-                            self.completeLogin()
-                            self.stopActivityIndicator()
-                        }
-                    } else {
-                        dispatch_async(dispatch_get_main_queue()) {
-                            self.alertController.message = errorString
-                            self.presentViewController(self.alertController, animated: true, completion: nil)
-                            self.stopActivityIndicator()
-                        }
-                    }
-                }
+                loginWithFB(accessToken)
             }
         }
     }
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
         // This method is not needed in this view controller
+    }
+    
+    // Helper
+    func loginWithFB(accessToken: FBSDKAccessToken) {
+        UdacityClient.sharedInstance().loginWithFacebook(accessToken.tokenString) { (success, errorString) in
+            if success {
+                print("Login with Facebook successful")
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.completeLogin()
+                    self.stopActivityIndicator()
+                }
+            } else {
+                let errorMessage = "An error occurred with Facebook login: \(errorString!).\nPlease try again."
+                self.showAlertController(errorMessage)
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.stopActivityIndicator()
+                }
+            }
+        }
     }
     
     

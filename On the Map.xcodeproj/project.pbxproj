@@ -11,6 +11,8 @@
 		9F2737441BF77C37000A1856 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2737431BF77C37000A1856 /* TableViewController.swift */; };
 		9F8DDFFB1C04A34000A33A3D /* PostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8DDFFA1C04A34000A33A3D /* PostingViewController.swift */; };
 		9F8DDFFD1C06D2F700A33A3D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8DDFFC1C06D2F700A33A3D /* User.swift */; };
+		9F8DE0141C0877F100A33A3D /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8DE0121C0877F100A33A3D /* FBSDKCoreKit.framework */; };
+		9F8DE0151C0877F100A33A3D /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8DE0131C0877F100A33A3D /* FBSDKLoginKit.framework */; };
 		9F9C628A1BEF6E1C0039DE46 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9C62891BEF6E1C0039DE46 /* AppDelegate.swift */; };
 		9F9C628C1BEF6E1C0039DE46 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9C628B1BEF6E1C0039DE46 /* LoginViewController.swift */; };
 		9F9C628F1BEF6E1C0039DE46 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F9C628D1BEF6E1C0039DE46 /* Main.storyboard */; };
@@ -22,8 +24,6 @@
 		9F9C62C71BF3046F0039DE46 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F9C62C41BF3046F0039DE46 /* Roboto-Regular.ttf */; };
 		9F9C62C81BF3046F0039DE46 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F9C62C51BF3046F0039DE46 /* Roboto-Thin.ttf */; };
 		9FA6AB9F1BF862E700D7D228 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6AB9E1BF862E700D7D228 /* TabBarController.swift */; };
-		9FA6ABB51BF99D4E00D7D228 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FA6ABB31BF99D4E00D7D228 /* FBSDKCoreKit.framework */; };
-		9FA6ABB61BF99D4E00D7D228 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FA6ABB41BF99D4E00D7D228 /* FBSDKLoginKit.framework */; };
 		9FA6ABB81BFADC7200D7D228 /* UdacityConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6ABB71BFADC7200D7D228 /* UdacityConvenience.swift */; };
 		9FA6ABBD1BFB283D00D7D228 /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6ABBC1BFB283D00D7D228 /* ParseClient.swift */; };
 		9FA6ABBF1BFB437D00D7D228 /* ParseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6ABBE1BFB437D00D7D228 /* ParseConstants.swift */; };
@@ -55,6 +55,8 @@
 		9F2737431BF77C37000A1856 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		9F8DDFFA1C04A34000A33A3D /* PostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostingViewController.swift; sourceTree = "<group>"; };
 		9F8DDFFC1C06D2F700A33A3D /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		9F8DE0121C0877F100A33A3D /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "../../../../../FacebookSDK/FacebookSDKs-iOS-20151111/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
+		9F8DE0131C0877F100A33A3D /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "../../../../../FacebookSDK/FacebookSDKs-iOS-20151111/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
 		9F9C62861BEF6E1C0039DE46 /* On the Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On the Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F9C62891BEF6E1C0039DE46 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F9C628B1BEF6E1C0039DE46 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -72,8 +74,6 @@
 		9F9C62C41BF3046F0039DE46 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		9F9C62C51BF3046F0039DE46 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		9FA6AB9E1BF862E700D7D228 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		9FA6ABB31BF99D4E00D7D228 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		9FA6ABB41BF99D4E00D7D228 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		9FA6ABB71BFADC7200D7D228 /* UdacityConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConvenience.swift; sourceTree = "<group>"; };
 		9FA6ABBC1BFB283D00D7D228 /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
 		9FA6ABBE1BFB437D00D7D228 /* ParseConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConstants.swift; sourceTree = "<group>"; };
@@ -88,8 +88,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9FA6ABB61BF99D4E00D7D228 /* FBSDKLoginKit.framework in Frameworks */,
-				9FA6ABB51BF99D4E00D7D228 /* FBSDKCoreKit.framework in Frameworks */,
+				9F8DE0151C0877F100A33A3D /* FBSDKLoginKit.framework in Frameworks */,
+				9F8DE0141C0877F100A33A3D /* FBSDKCoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,8 +207,8 @@
 		9FA6ABA01BF989C900D7D228 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9FA6ABB31BF99D4E00D7D228 /* FBSDKCoreKit.framework */,
-				9FA6ABB41BF99D4E00D7D228 /* FBSDKLoginKit.framework */,
+				9F8DE0121C0877F100A33A3D /* FBSDKCoreKit.framework */,
+				9F8DE0131C0877F100A33A3D /* FBSDKLoginKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -528,24 +528,48 @@
 		9F9C62AF1BEF6E1C0039DE46 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)",
+					"$(SDK_ROOT)",
+					"/Users/khoavo/Documents/FacebookSDK/**",
+				);
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(PROJECT_DIR)",
+					"$(SDK_ROOT)",
+					"/Users/khoavo/Documents/FacebookSDK/**",
+				);
 				INFOPLIST_FILE = "On the Map/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.AppSynth.On-the-Map";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Debug;
 		};
 		9F9C62B01BEF6E1C0039DE46 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)",
+					"$(SDK_ROOT)",
+					"/Users/khoavo/Documents/FacebookSDK/**",
+				);
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(PROJECT_DIR)",
+					"/Users/khoavo/Documents/FacebookSDK/**",
+					"$(SDK_ROOT)",
+				);
 				INFOPLIST_FILE = "On the Map/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.AppSynth.On-the-Map";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Release;
 		};

@@ -16,15 +16,20 @@ extension ParseClient {
         static let APIKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
         
         // MARK: URLs
-        static let baseURLSecure: String = "https://api.parse.com/1/classes/StudentLocation"
+        static let baseURLSecure: String = "https://api.parse.com/1"
     }
     
     // MARK: - Methods
     struct Methods {
         
-        // MARK: - Authentication
+        // MARK: Class-Level Operation
+        static let ClassLevelOperation = "/classes/StudentLocation"
         
+        // MARK: Batch Operation
+        static let BatchOperation = "/batch"
         
+        // MARK: Query
+        static let QueryParameter = "?where="
     }
     
     // MARK: - Parameter Keys
@@ -48,5 +53,6 @@ extension ParseClient {
         static let FirstName = "firstName"
         static let MediaURL = "mediaURL"
         static let ObjectID = "objectId"
+        static let UniqueKey = "uniqueKey"
     }
 }

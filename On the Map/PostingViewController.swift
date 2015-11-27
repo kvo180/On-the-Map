@@ -29,6 +29,7 @@ class PostingViewController: UIViewController, UITextViewDelegate {
     let locationTextViewPlaceholderText = "Enter your location..."
     let URLTextViewPlaceholderText = "Enter a link to share..."
     let URLTextViewProtocolText = "https://"
+    var objectIDArray = [String]()
     let whitespaceSet = NSCharacterSet.whitespaceCharacterSet()
     let darkBlueColor = UIColor(red: 30/255, green: 65/255, blue: 139/255, alpha: 1.0)
     let lightGrayColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1.0)
@@ -91,20 +92,14 @@ class PostingViewController: UIViewController, UITextViewDelegate {
                 
                 else {
                     
-                    let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)
-                    let dismissAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
-                    alertController.addAction(dismissAction)
-                    
                     if error!.domain == kCLErrorDomain && error!.code == 8 {
                         
-                        alertController.message = "Location cannot be found."
-                        self.presentViewController(alertController, animated: true, completion: nil)
+                        self.showAlertController("Location not found.")
                     }
                     
                     else {
                         
-                        alertController.message = error!.localizedDescription
-                        self.presentViewController(alertController, animated: true, completion: nil)
+                        self.showAlertController(error!.localizedDescription)
                     }
                 }
             }
@@ -112,10 +107,7 @@ class PostingViewController: UIViewController, UITextViewDelegate {
             
         else {
             
-            let alertController = UIAlertController(title: "", message: "Please enter a location.", preferredStyle: UIAlertControllerStyle.Alert)
-            let dismissAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
-            alertController.addAction(dismissAction)
-            presentViewController(alertController, animated: true, completion: nil)
+            showAlertController("Please enter a location.")
         }
     }
     
@@ -151,23 +143,25 @@ class PostingViewController: UIViewController, UITextViewDelegate {
             // Get user mediaURL and store into property
             User.mediaURL = URLTextView.text!
             
-            ParseClient.sharedInstance().postStudentLocation() { (success, errorString) in
-                if success {
-                    
-                    print("Student location successfully posted.")
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                    }
-                }
+            /* If querying returns an existing post, call PUT method. If query result is empty, call POST method. */
+            if !objectIDArray.isEmpty {
                 
-                else {
-                    
-                    let alertController = UIAlertController(title: "", message: "\(errorString!)\nPlease try again.", preferredStyle: UIAlertControllerStyle.Alert)
-                    let dismissAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
-                    alertController.addAction(dismissAction)
-                    
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self.presentViewController(alertController, animated: true, completion: nil)
+                print("call PUT method")
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+            else {
+                ParseClient.sharedInstance().postStudentLocation() { (success, errorString) in
+                    if success {
+                        
+                        print("Student location successfully posted.")
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                        }
+                    }
+                        
+                    else {
+                        
+                        self.showAlertController("\(errorString!).\nPlease try again.")
                     }
                 }
             }
@@ -175,10 +169,7 @@ class PostingViewController: UIViewController, UITextViewDelegate {
         
         else {
             
-            let alertController = UIAlertController(title: "", message: "Please enter a valid link.", preferredStyle: UIAlertControllerStyle.Alert)
-            let dismissAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
-            alertController.addAction(dismissAction)
-            presentViewController(alertController, animated: true, completion: nil)
+            self.showAlertController("Please enter a valid link.")
         }
     }
     
@@ -237,6 +228,18 @@ class PostingViewController: UIViewController, UITextViewDelegate {
             
             self.postLocationContainerView.hidden = true
             self.postLocationContainerView.alpha = 0
+        }
+    }
+    
+    func showAlertController(message: String) {
+        
+        let alertController = UIAlertController(title: "", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.message = message
+        let dismissAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
+        alertController.addAction(dismissAction)
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
     

@@ -54,10 +54,69 @@ extension ParseClient {
                     completionHandler(success: true, errorString: nil)
                 } else {
                     print("Could not find \(ParseClient.JSONResponseKeys.ObjectID) in \(result)")
-                    completionHandler(success: false, errorString: "Could not complete request. \nPlease try again.")
+                    completionHandler(success: false, errorString: "Could not complete request.")
                 }
             }
         }
     }
     
+    
+    // MARK: Querying for a Student Location
+    func queryStudentLocation(completionHandler: (objectIDArray: [String], success: Bool, errorString: String?) -> Void) {
+        
+        let request = ParseClient.configureURLRequestForQUERYStudentLocation()
+        
+        createDataTask(request) { (result, error) in
+            
+            if let error = error {
+                completionHandler(objectIDArray: [], success: false, errorString: error.localizedDescription)
+            } else {
+                if let results = result.valueForKey(ParseClient.JSONResponseKeys.StudentResults) as? [[String : AnyObject]] {
+                    
+                    var objectIDArray = [String]()
+                    
+                    if !results.isEmpty {
+                        
+                        // Map objectId strings from results array to objectIDArray
+                        objectIDArray = results.map({$0["objectId"] as! String})
+                    }
+                    
+                    completionHandler(objectIDArray: objectIDArray, success: true, errorString: nil)
+                } else {
+                    print("Could not find \(ParseClient.JSONResponseKeys.StudentResults) in \(result)")
+                    completionHandler(objectIDArray: [], success: false, errorString: "Could not complete request.")
+                }
+            }
+        }
+    }
+    
+    
+    // MARK: - DELETE Student Location
+    func deleteStudentLocation(objectIDArray: [String], completionHandler: (success: Bool, errorString: String?) -> Void) {
+        
+        let request = ParseClient.configureURLRequestForBatchDELETEStudentLocation(objectIDArray)
+        
+        createDataTask(request) { (result, error) in
+            
+            if let error = error {
+                completionHandler(success: false, errorString: error.localizedDescription)
+            } else {
+                if let results = result as? [[String : [String : AnyObject]]] {
+
+                    let dictionary = results[0] as NSDictionary
+                    if let dict = dictionary.valueForKey("success") as? [String : AnyObject] {
+                        print(dict)
+                        completionHandler(success: true, errorString: nil)
+                    } else {
+                        print("Delete request - returned results not empty.")
+                        completionHandler(success: false, errorString: "Could not complete request.")
+                    }
+                    
+                } else {
+                    print("Delete request failed.")
+                    completionHandler(success: false, errorString: "Could not complete request.")
+                }
+            }
+        }
+    }
 }

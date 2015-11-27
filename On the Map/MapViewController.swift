@@ -27,10 +27,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         loadingView.center = view.center
         loadingView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5)
         loadingView.clipsToBounds = true
-        
         activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0)
         activityIndicator.activityIndicatorViewStyle = .WhiteLarge
         activityIndicator.center = loadingView.center
+        loadingView.addSubview(activityIndicator)
     }
     
     
@@ -57,7 +57,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 
             } else {
                 
-                let alertController = UIAlertController(title: "", message: "\(errorString!)\nPlease try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                let alertController = UIAlertController(title: "", message: "\(errorString!).\nPlease try again.", preferredStyle: UIAlertControllerStyle.Alert)
                 let dismissAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
                 alertController.addAction(dismissAction)
                 
@@ -70,7 +70,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func showLoadingOverlayView() {
-        loadingView.addSubview(activityIndicator)
         view.addSubview(loadingView)
         activityIndicator.startAnimating()
     }

@@ -26,7 +26,7 @@ extension UdacityClient {
                 if let account = result.valueForKey(UdacityClient.JSONResponseKeys.Account) as? NSDictionary {
                     if let userKey = account.valueForKey(UdacityClient.JSONResponseKeys.UserKey) as? String {
                         print("Got userKey: \(userKey)")
-                        self.userKey = userKey
+                        User.uniqueKey = userKey
                         completionHandler(success: true, errorString: nil)
                     } else {
                         print("Could not find \(UdacityClient.JSONResponseKeys.UserKey) in \(account)")
@@ -54,7 +54,7 @@ extension UdacityClient {
                 if let account = result.valueForKey(UdacityClient.JSONResponseKeys.Account) as? NSDictionary {
                     if let userKey = account.valueForKey(UdacityClient.JSONResponseKeys.UserKey) as? String {
                         print("Got userKey: \(userKey)")
-                        self.userKey = userKey
+                        User.uniqueKey = userKey
                         completionHandler(success: true, errorString: nil)
                     } else {
                         print("Could not find \(UdacityClient.JSONResponseKeys.UserKey) in \(account)")
@@ -81,7 +81,6 @@ extension UdacityClient {
                 if let user = result.valueForKey("user") as? NSDictionary {
                     User.lastName = user["last_name"] as! String
                     User.firstName = user["first_name"] as! String
-                    User.uniqueKey = user["key"] as! String
                 }
             }
         }

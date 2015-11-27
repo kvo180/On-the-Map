@@ -65,7 +65,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 
             } else {
                 
-                let alertController = UIAlertController(title: "", message: "\(errorString!)\nPlease try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                let alertController = UIAlertController(title: "", message: "\(errorString!).\nPlease try again.", preferredStyle: UIAlertControllerStyle.Alert)
                 let dismissAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
                 alertController.addAction(dismissAction)
                 
@@ -115,7 +115,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         cell.textLabel!.font = UIFont(name: "Roboto-Regular", size: 18.0)
         cell.detailTextLabel!.text = mediaURL
 //        cell.detailTextLabel!.text = "Updated \(date)"
-        cell.detailTextLabel!.font = UIFont(name: "Roboto-Thin", size: 13.0)
+        cell.detailTextLabel!.font = UIFont(name: "Roboto-Regular", size: 13.0)
         cell.imageView?.image = UIImage(named: "pin")
         cell.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
         
