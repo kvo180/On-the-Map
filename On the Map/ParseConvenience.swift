@@ -119,4 +119,26 @@ extension ParseClient {
             }
         }
     }
+    
+    func putStudentLocation(objectID: String, completionHandler: (success: Bool, errorString: String?) -> Void) {
+        
+        let request = ParseClient.configureURLRequestForPUTStudentLocation(objectID)
+        
+        createDataTask(request) { (result, error) in
+            
+            if let error = error {
+                completionHandler(success: false, errorString: error.localizedDescription)
+            } else {
+                if let updatedAt = result.valueForKey(ParseClient.JSONResponseKeys.UpdatedAt) as? String {
+                    
+                    print("Updated at: \(updatedAt)")
+                    
+                    completionHandler(success: true, errorString: nil)
+                } else {
+                    print("Could not find \(ParseClient.JSONResponseKeys.UpdatedAt) in \(result)")
+                    completionHandler(success: false, errorString: "Could not complete request.")
+                }
+            }
+        }
+    }
 }

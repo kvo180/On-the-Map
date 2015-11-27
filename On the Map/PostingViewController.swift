@@ -144,13 +144,32 @@ class PostingViewController: UIViewController, UITextViewDelegate {
             User.mediaURL = URLTextView.text!
             
             /* If querying returns an existing post, call PUT method. If query result is empty, call POST method. */
+            
             if !objectIDArray.isEmpty {
+                print("Called PUT Method")
                 
-                print("call PUT method")
-                self.dismissViewControllerAnimated(true, completion: nil)
+                ParseClient.sharedInstance().putStudentLocation(objectIDArray[0]) { (success, errorString) in
+                    
+                    if success {
+                        
+                        print("Student location successfully updated.")
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                        }
+                    }
+                    
+                    else {
+                        
+                        self.showAlertController("\(errorString!).\nPlease try again.")
+                    }
+                }
             }
+                
             else {
+                print("Called POST Method")
+                
                 ParseClient.sharedInstance().postStudentLocation() { (success, errorString) in
+                    
                     if success {
                         
                         print("Student location successfully posted.")

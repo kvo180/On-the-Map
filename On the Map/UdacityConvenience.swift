@@ -33,7 +33,7 @@ extension UdacityClient {
                         completionHandler(success: false, errorString: "User not found.")
                     }
                 } else {
-                    print("Could not find \(UdacityClient.JSONResponseKeys.Account) in \(result)")
+                    print("Could not find \(UdacityClient.JSONResponseKeys.UserKey) in \(result)")
                     completionHandler(success: false, errorString: "Account not found.")
                 }
             }
@@ -61,7 +61,7 @@ extension UdacityClient {
                         completionHandler(success: false, errorString: "User not found.")
                     }
                 } else {
-                    print("Could not find \(UdacityClient.JSONResponseKeys.Account) in \(result)")
+                    print("Could not find \(UdacityClient.JSONResponseKeys.UserKey) in \(result)")
                     completionHandler(success: false, errorString: "Account not found.")
                 }
             }
