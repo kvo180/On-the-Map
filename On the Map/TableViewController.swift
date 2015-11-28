@@ -99,32 +99,47 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let student = students[indexPath.row]
-        let cell = tableView.dequeueReusableCellWithIdentifier("StudentTableViewCell") as UITableViewCell!
-
+        let cell = tableView.dequeueReusableCellWithIdentifier("StudentTableViewCell") as! StudentLocationTableViewCell
+        
+        // Configure label container view
+        cell.labelContainerView.layer.cornerRadius = cell.labelContainerView.frame.size.width / 2
+        cell.labelContainerView.clipsToBounds = true
+        let labelDiameter = cell.labelContainerView.frame.size.width
+        let initialsTextSize = ((labelDiameter / 2) * sqrt(2)) * 0.7
+        
+        // Get label text values
         let first = student.firstName
         let last = student.lastName
         let mediaURL = student.mediaURL
+        let firstInitial = first[first.startIndex]
+        let lastInitial = last[last.startIndex]
         
-//        let updateAt = student.updatedAt
-//        let dateFormatter = NSDateFormatter()
-//        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
-//        dateFormatter.dateFormat = "MM-dd-yyyy 'at' h:mm a"
-//        let date = dateFormatter.stringFromDate(updateAt)
+        // Get updatedAt date and configure timezone and date format
+        let updateAt = student.updatedAt
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.timeZone = NSTimeZone.localTimeZone()
+        dateFormatter.dateFormat = "MM-dd-yyyy 'at' h:mm a"
+        let date = dateFormatter.stringFromDate(updateAt)
         
-        cell.textLabel!.text = "\(first) \(last)"
-        cell.textLabel!.font = UIFont(name: "Roboto-Regular", size: 18.0)
-        cell.detailTextLabel!.text = mediaURL
-//        cell.detailTextLabel!.text = "Updated \(date)"
-        cell.detailTextLabel!.font = UIFont(name: "Roboto-Regular", size: 13.0)
-        cell.imageView?.image = UIImage(named: "pin")
-        cell.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
+        // Configure cell views
+        cell.nameLabel.text = "\(first) \(last)"
+        cell.nameLabel.font = UIFont(name: "Roboto-Regular", size: 18.0)
+        cell.urlLabel.text = mediaURL
+        cell.urlLabel.font = UIFont(name: "Roboto-Regular", size: 14.0)
+        cell.initialsLabel.text = "\(firstInitial)\(lastInitial)"
+        cell.initialsLabel.font = UIFont(name: "Roboto-Regular", size: initialsTextSize)
+        cell.updatedAtLabel.text = "Updated \(date)"
+        cell.updatedAtLabel.font = UIFont(name: "Roboto-Thin", size: 12.0)
+
         
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        if let urlString = studentsTableView.cellForRowAtIndexPath(indexPath)?.detailTextLabel!.text {
+        let cell = studentsTableView.cellForRowAtIndexPath(indexPath) as! StudentLocationTableViewCell
+        
+        if let urlString = cell.urlLabel.text {
             
             let url = NSURL(string: urlString)
             let app = UIApplication.sharedApplication()

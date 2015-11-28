@@ -171,6 +171,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
                 dispatch_async(dispatch_get_main_queue()) {
                     self.completeLogin()
                     self.stopActivityIndicator()
+                    self.emailLoginTextField.text = nil
+                    self.passwordLoginTextField.text = nil
                 }
             } else {
                 let errorMessage = "An error occurred with Facebook login: \(errorString!).\nPlease try again."

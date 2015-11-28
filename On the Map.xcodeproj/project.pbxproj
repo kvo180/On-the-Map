@@ -31,6 +31,7 @@
 		9FA6ABC31BFC21BE00D7D228 /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA6ABC21BFC21BE00D7D228 /* StudentInformation.swift */; };
 		9FD30D301BF564030034CB14 /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD30D2F1BF564030034CB14 /* UdacityClient.swift */; };
 		9FD30D321BF5658A0034CB14 /* UdacityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD30D311BF5658A0034CB14 /* UdacityConstants.swift */; };
+		9FF66E3C1C096016000D5A48 /* StudentLocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF66E3B1C096016000D5A48 /* StudentLocationTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		9FA6ABC21BFC21BE00D7D228 /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
 		9FD30D2F1BF564030034CB14 /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		9FD30D311BF5658A0034CB14 /* UdacityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConstants.swift; sourceTree = "<group>"; };
+		9FF66E3B1C096016000D5A48 /* StudentLocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentLocationTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +170,7 @@
 		9F9C62B71BF2F5F40039DE46 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9FF66E3B1C096016000D5A48 /* StudentLocationTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 				9FD30D321BF5658A0034CB14 /* UdacityConstants.swift in Sources */,
 				9FA6ABB81BFADC7200D7D228 /* UdacityConvenience.swift in Sources */,
 				9F9C628A1BEF6E1C0039DE46 /* AppDelegate.swift in Sources */,
+				9FF66E3C1C096016000D5A48 /* StudentLocationTableViewCell.swift in Sources */,
 				9FA6AB9F1BF862E700D7D228 /* TabBarController.swift in Sources */,
 				9F2737421BF765C2000A1856 /* MapViewController.swift in Sources */,
 				9FD30D301BF564030034CB14 /* UdacityClient.swift in Sources */,
