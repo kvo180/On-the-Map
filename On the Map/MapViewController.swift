@@ -12,7 +12,6 @@ import MapKit
 class MapViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: - Properties
-    var locations: [StudentInformation] = [StudentInformation]()
     @IBOutlet weak var mapView: MKMapView!
     var loadingView = UIView()
     var activityIndicator = UIActivityIndicatorView()
@@ -49,7 +48,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 
                 dispatch_after(time, dispatch_get_main_queue()) {
 
-                    self.locations = ParseClient.sharedInstance().students
                     self.configureAnnotations()
                     self.dismissLoadingOverlayView()
                     print("Student Locations data downloaded successfully")
@@ -92,7 +90,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         var annotations = [MKPointAnnotation()]
 
         // Configure annotations
-        for studentLocation in locations {
+        for studentLocation in ParseClient.sharedInstance().students {
 
             let lat = CLLocationDegrees(studentLocation.latitude)
             let long = CLLocationDegrees(studentLocation.longitude)

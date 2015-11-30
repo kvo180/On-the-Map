@@ -26,6 +26,7 @@ class PostingViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var submitButton: UIButton!
     
     var defaultRegion: MKCoordinateRegion!
+    var activityIndicator = UIActivityIndicatorView()
     let locationTextViewPlaceholderText = "Enter your location..."
     let URLTextViewPlaceholderText = "Enter a link to share..."
     let URLTextViewProtocolText = "https://"
@@ -57,12 +58,18 @@ class PostingViewController: UIViewController, UITextViewDelegate {
         
         // Configure buttons
         findOnMapButton.layer.cornerRadius = 10.0
+        findOnMapButton.alpha = 1.0
         submitButton.layer.cornerRadius = 10.0
         cancelButton.setTitleColor(darkBlueColor, forState: .Normal)
         
         // Add tap recognizers
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
+        
+        // Configure activity indicator
+        activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0)
+        activityIndicator.activityIndicatorViewStyle = .WhiteLarge
+        activityIndicator.center = view.center
     }
     
     
@@ -72,6 +79,9 @@ class PostingViewController: UIViewController, UITextViewDelegate {
     @IBAction func findOnMapButtonTouchUp(sender: AnyObject) {
         
         if locationTextView.text != locationTextViewPlaceholderText {
+            
+            showActivityIndicator()
+            findOnMapButton.alpha = 0.5
             
             // Get user mapString and store into property
             User.mapString = locationTextView.text!
@@ -86,7 +96,8 @@ class PostingViewController: UIViewController, UITextViewDelegate {
                     // Get user string coordinates and store into properties
                     User.latitude = (userPlacemark.location?.coordinate.latitude)!
                     User.longitude = (userPlacemark.location?.coordinate.longitude)!
-
+                    
+                    self.hideActivityIndicator()
                     self.showPostURLContainerView(userPlacemark)
                 }
                 
@@ -101,6 +112,8 @@ class PostingViewController: UIViewController, UITextViewDelegate {
                         
                         self.showAlertController(error!.localizedDescription)
                     }
+                    
+                    self.hideActivityIndicator()
                 }
             }
         }
@@ -122,9 +135,10 @@ class PostingViewController: UIViewController, UITextViewDelegate {
         })
         
         // Configure and show postLocationContainerView
+        findOnMapButton.alpha = 1.0
         cancelButton.setTitleColor(darkBlueColor, forState: .Normal)
         postLocationContainerView.hidden = false
-        postLocationContainerView.alpha = 1
+        postLocationContainerView.alpha = 1.0
         
         // Hide postURLContainerView with delay so animation is visible
         let delay = 0.4 * Double(NSEC_PER_SEC)
@@ -260,6 +274,16 @@ class PostingViewController: UIViewController, UITextViewDelegate {
         dispatch_async(dispatch_get_main_queue()) {
             self.presentViewController(alertController, animated: true, completion: nil)
         }
+    }
+    
+    func showActivityIndicator() {
+        activityIndicator.startAnimating()
+        view.addSubview(activityIndicator)
+    }
+    
+    func hideActivityIndicator() {
+        activityIndicator.stopAnimating()
+        activityIndicator.removeFromSuperview()
     }
     
     // Close keyboard whenever user taps anywhere outside of keyboard:

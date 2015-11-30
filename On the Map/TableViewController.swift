@@ -11,7 +11,6 @@ import UIKit
 class TableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - Properties
-    var students: [StudentInformation] = [StudentInformation]()
     @IBOutlet weak var studentsTableView: UITableView!
     var refreshControl = UIRefreshControl()
     var loadingView = UIView()
@@ -36,8 +35,6 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0)
         activityIndicator.activityIndicatorViewStyle = .WhiteLarge
         activityIndicator.center = loadingView.center
-        
-        students = ParseClient.sharedInstance().students
     }
     
     // Get student locations
@@ -56,7 +53,6 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 
                 dispatch_after(time, dispatch_get_main_queue()) {
                     
-                    self.students = ParseClient.sharedInstance().students
                     self.studentsTableView.reloadData()
                     self.dismissLoadingOverlayView()
                     self.refreshControl.endRefreshing()
@@ -93,12 +89,12 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // MARK: - UITableViewDelegate and UITableViewDataSource Methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return students.count
+        return ParseClient.sharedInstance().students.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let student = students[indexPath.row]
+        let student = ParseClient.sharedInstance().students[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier("StudentTableViewCell") as! StudentLocationTableViewCell
         
         // Configure label container view
