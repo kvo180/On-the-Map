@@ -150,7 +150,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 } else {
                     print("URL cannot be opened")
                     
-                    let alertController = UIAlertController(title: "", message: "Invalid URL", preferredStyle: UIAlertControllerStyle.Alert)
+                    let alertController = UIAlertController(title: "", message: "Invalid URL.", preferredStyle: UIAlertControllerStyle.Alert)
                     let dismissAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
                     alertController.addAction(dismissAction)
                     presentViewController(alertController, animated: true, completion: nil)
