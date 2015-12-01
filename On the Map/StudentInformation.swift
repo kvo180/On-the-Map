@@ -5,7 +5,6 @@
 //  Created by Khoa Vo on 11/17/15.
 //  Copyright © 2015 AppSynth. All rights reserved.
 //
-//  Helper method obtained from TheMovieManager by Jarrod Parkes on 2/11/15.
 
 import Foundation
 
@@ -42,20 +41,6 @@ struct StudentInformation {
         if let updatedAt = dictionary[ParseClient.JSONResponseKeys.UpdatedAt] as? String {
             self.updatedAt = dateFormatter.dateFromString(updatedAt)
         }
-    }
-    
-    
-    // MARK: - Helper
-    /* Helper: Given an array of dictionaries, convert them to an array of StudentInformation objects */
-    static func studentsFromResults(results: [[String : AnyObject]]) -> [StudentInformation] {
-        
-        var students = [StudentInformation]()
-        
-        for result in results {
-            students.append(StudentInformation(dictionary: result))
-        }
-        
-        return students
     }
     
 }

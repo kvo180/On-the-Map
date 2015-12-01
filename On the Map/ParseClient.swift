@@ -13,8 +13,6 @@ class ParseClient: NSObject {
     // MARK: - Properties
     var session: NSURLSession!
     
-    var students: [StudentInformation] = [StudentInformation]()
-    
     // MARK: - Initializers
     override init() {
         super.init()

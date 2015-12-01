@@ -56,7 +56,7 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
         super.viewWillAppear(animated)
         
         // GET Student Locations
-        if ParseClient.sharedInstance().students.isEmpty {
+        if Student.students.isEmpty {
             let mapVC = viewControllers![0] as! MapViewController
             mapVC.getStudentData()
         }
@@ -77,7 +77,7 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
         confirmLogoutController.addAction(cancelAction)
         
         // Clear out stored Student Information array
-        ParseClient.sharedInstance().students = []
+        Student.students = []
         
         presentViewController(confirmLogoutController, animated: true, completion: nil)
     }
@@ -170,7 +170,7 @@ class TabBarController: UITabBarController, FBSDKLoginButtonDelegate {
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
         
         // Clear out stored Student Information array
-        ParseClient.sharedInstance().students = []
+        Student.students = []
         
         print("Facebook logged out")
         deleteCurrentSession()

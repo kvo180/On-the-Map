@@ -79,8 +79,8 @@ extension UdacityClient {
                 print(error)
             } else {
                 if let user = result.valueForKey("user") as? NSDictionary {
-                    User.lastName = user["last_name"] as! String
-                    User.firstName = user["first_name"] as! String
+                    User.lastName = user.valueForKey("last_name") as! String
+                    User.firstName = user.valueForKey("first_name") as! String
                 }
             }
         }

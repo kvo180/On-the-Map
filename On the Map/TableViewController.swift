@@ -31,7 +31,6 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         loadingView.center = view.center
         loadingView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5)
         loadingView.clipsToBounds = true
-        
         activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0)
         activityIndicator.activityIndicatorViewStyle = .WhiteLarge
         activityIndicator.center = loadingView.center
@@ -89,12 +88,12 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // MARK: - UITableViewDelegate and UITableViewDataSource Methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ParseClient.sharedInstance().students.count
+        return Student.students.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let student = ParseClient.sharedInstance().students[indexPath.row]
+        let student = Student.students[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier("StudentTableViewCell") as! StudentLocationTableViewCell
         
         // Configure label container view

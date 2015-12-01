@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9F2737421BF765C2000A1856 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2737411BF765C2000A1856 /* MapViewController.swift */; };
 		9F2737441BF77C37000A1856 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2737431BF77C37000A1856 /* TableViewController.swift */; };
+		9F85F76D1C0E20B2006A2208 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F85F76C1C0E20B2006A2208 /* Student.swift */; };
 		9F8DDFFB1C04A34000A33A3D /* PostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8DDFFA1C04A34000A33A3D /* PostingViewController.swift */; };
 		9F8DDFFD1C06D2F700A33A3D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8DDFFC1C06D2F700A33A3D /* User.swift */; };
 		9F9C628A1BEF6E1C0039DE46 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9C62891BEF6E1C0039DE46 /* AppDelegate.swift */; };
@@ -54,6 +55,7 @@
 /* Begin PBXFileReference section */
 		9F2737411BF765C2000A1856 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		9F2737431BF77C37000A1856 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		9F85F76C1C0E20B2006A2208 /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		9F8DDFFA1C04A34000A33A3D /* PostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostingViewController.swift; sourceTree = "<group>"; };
 		9F8DDFFC1C06D2F700A33A3D /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9F9C62861BEF6E1C0039DE46 /* On the Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On the Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -180,6 +182,7 @@
 			children = (
 				9FD30D2C1BF4A96B0034CB14 /* Clients */,
 				9FA6ABC21BFC21BE00D7D228 /* StudentInformation.swift */,
+				9F85F76C1C0E20B2006A2208 /* Student.swift */,
 				9F8DDFFC1C06D2F700A33A3D /* User.swift */,
 			);
 			name = Model;
@@ -394,6 +397,7 @@
 				9F2737421BF765C2000A1856 /* MapViewController.swift in Sources */,
 				9FD30D301BF564030034CB14 /* UdacityClient.swift in Sources */,
 				9F8DDFFB1C04A34000A33A3D /* PostingViewController.swift in Sources */,
+				9F85F76D1C0E20B2006A2208 /* Student.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

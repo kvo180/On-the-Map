@@ -90,7 +90,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         var annotations = [MKPointAnnotation()]
 
         // Configure annotations
-        for studentLocation in ParseClient.sharedInstance().students {
+        for studentLocation in Student.students {
 
             let lat = CLLocationDegrees(studentLocation.latitude)
             let long = CLLocationDegrees(studentLocation.longitude)
